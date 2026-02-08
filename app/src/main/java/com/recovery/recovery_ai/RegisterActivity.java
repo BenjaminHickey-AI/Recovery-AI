@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_ui);
 
+        // Registration Vairables and front end links
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         email = findViewById(R.id.email);
@@ -44,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         // Handle birthday date picker
         birthday.setOnClickListener(v -> showDatePickerDialog());
 
+        // Register Button Functionality
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         });
 
                                 Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegisterActivity.this, QuestionnaireActivity.class));
+                                //startActivity(new Intent(RegisterActivity.this, NEXT ACTIVITY));
                                 finish();
                             } else {
                                 String errorMessage = getFirebaseErrorMessage(task.getException());
