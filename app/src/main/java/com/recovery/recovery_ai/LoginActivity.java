@@ -22,13 +22,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
 
+        // Take user to registration activity
         TextView registerLink = findViewById(R.id.registerLink);
         registerLink.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
 
         // Check if the user is already logged in
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
-            startActivity(new Intent(LoginActivity.this, MainAppActivity.class));
+            //startActivity(new Intent(LoginActivity.this, NEXT ACTIVITY));
             finish();
             return; // Prevents further execution of onCreate()
         }
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         Button loginBtn = findViewById(R.id.loginBtn);
 
-
+        // Log in button functionality
         loginBtn.setOnClickListener(v -> {
             String emailText = email.getText().toString().trim();
             String passwordText = password.getText().toString().trim();
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 auth.signInWithEmailAndPassword(emailText, passwordText)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                startActivity(new Intent(LoginActivity.this, MainAppActivity.class));
+                                //startActivity(new Intent(LoginActivity.this, NEXT ACTIVITY));
                                 finish();
                             } else {
                                 Toast.makeText(LoginActivity.this, "Login Failed!", Toast.LENGTH_SHORT).show();
