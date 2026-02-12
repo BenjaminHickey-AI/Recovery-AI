@@ -27,6 +27,7 @@
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:background="@drawable/skip_pill"
+        app:backgroundTint="@null"
         android:paddingHorizontal="18dp"
         android:paddingVertical="8dp"
         android:minHeight="0dp"
@@ -69,12 +70,16 @@
 
         <Button
             android:id="@+id/btnCreateAccount"
+            android:background="@drawable/btn_create_account"
+            app:backgroundTint="@null"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:text="@string/create_account" />
 
         <Button
             android:id="@+id/btnSignIn"
+            android:background="@drawable/btn_sign_in"
+            app:backgroundTint="@null"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="10dp"
