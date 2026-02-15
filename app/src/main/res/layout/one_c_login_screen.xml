@@ -29,15 +29,17 @@
         android:textColor="@android:color/white"
         android:background="@drawable/skip_pill"
         app:backgroundTint="@null"
+        android:textSize="20sp"
         android:paddingHorizontal="18dp"
         android:paddingVertical="8dp"
         android:minHeight="0dp"
         android:minWidth="0dp"
         android:elevation="6dp"
+        android:fontFamily="@font/inter_extrabold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="18dp" />
+        android:layout_marginEnd="18dp"/>
 
     <!-- The swipe-able pages -->
     <androidx.viewpager2.widget.ViewPager2
@@ -57,11 +59,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.22" />
 
+
     <!-- Bottom actions -->
     <LinearLayout
         android:id="@+id/bottomActions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="-30dp"
         android:orientation="vertical"
         android:paddingHorizontal="24dp"
         android:paddingVertical="16dp"
@@ -73,18 +77,27 @@
             android:id="@+id/btnCreateAccount"
             android:background="@drawable/btn_create_account"
             app:backgroundTint="@null"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="52dp"
-            android:text="@string/create_account" />
+            android:text="@string/create_account"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/inter_extrabold"
+            android:textSize="25sp"/>
 
         <Button
             android:id="@+id/btnSignIn"
             android:background="@drawable/btn_sign_in"
             app:backgroundTint="@null"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="52dp"
             android:layout_marginTop="10dp"
-            android:text="@string/sign_in" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/sign_in"
+            android:paddingTop="0dp"
+            android:fontFamily="@font/inter_extrabold"
+            android:textSize="28sp"
+            android:textColor="#000000"/>
+
 
     </LinearLayout>
 
