@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Recovery-AI</string>
+    <string name="skip">Skip</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_in">Sign In</string>
+    <string name="log_in_facebook">Log in</string>
+    <string name="sign_in_google">Sign in</string>
+    <string name="profile_image">profile image</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="send_code">send code</string>
 </resources>
