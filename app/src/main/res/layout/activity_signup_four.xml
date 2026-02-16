@@ -67,6 +67,8 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Number box -->
+
+            <!-- Back -->
             <EditText
                 android:id="@+id/age"
                 android:layout_width="140dp"
@@ -84,10 +86,11 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/btnBack"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/subtitle" />
+                app:layout_constraintTop_toBottomOf="@id/subtitle"
+                app:layout_constraintVertical_bias="1.0" />
 
-            <!-- Back -->
             <Button
                 android:id="@+id/btnBack"
                 android:layout_width="100dp"

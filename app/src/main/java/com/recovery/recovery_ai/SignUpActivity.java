@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -147,9 +146,9 @@ public class SignUpActivity extends AppCompatActivity {
         //element assigning
         backBtn = findViewById(R.id.btnBack);
         nextBtn = findViewById(R.id.btnNext);
-
         image = findViewById(R.id.imgUploaded);
 
+        //update image view with stored image
         image.setImageBitmap(user_image);
 
 
@@ -180,6 +179,7 @@ public class SignUpActivity extends AppCompatActivity {
         nextBtn = findViewById(R.id.btnNext);
         age = findViewById(R.id.age);
 
+        //update age text with stored age.
         age.setText(String.valueOf(user_age));
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +194,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 user_age = Integer.parseInt(age.getText().toString());
                 if(user_age > 15)
-
                     GoSignupFive();
                 else
                     Toast.makeText(SignUpActivity.this, "Please enter your age (must be at least 16 years old)", Toast.LENGTH_SHORT).show();
