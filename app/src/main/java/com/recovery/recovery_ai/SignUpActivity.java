@@ -51,9 +51,9 @@ public class SignUpActivity extends AppCompatActivity {
         else
             optionMale.setBackgroundResource(R.drawable.choice_circle_dim);
         if(isFemale)
-            optionMale.setBackgroundResource(R.drawable.choice_circle);
+            optionFemale.setBackgroundResource(R.drawable.choice_circle);
         else
-            optionMale.setBackgroundResource(R.drawable.choice_circle_dim);
+            optionFemale.setBackgroundResource(R.drawable.choice_circle_dim);
 
         optionMale.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,6 +279,7 @@ public class SignUpActivity extends AppCompatActivity {
         Button getFitBtn, loseWeightBtn, buildMuscleBtn, injuryPreventionBtn, finishBtn;
 
         //element assigning
+        backBtn = findViewById(R.id.btnBack);
         finishBtn = findViewById(R.id.btnFinish);
         getFitBtn = findViewById(R.id.btnGetFit);
         loseWeightBtn = findViewById(R.id.btnLoseWeight);
