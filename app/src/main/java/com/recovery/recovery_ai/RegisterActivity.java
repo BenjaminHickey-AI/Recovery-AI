@@ -1,6 +1,5 @@
 package com.recovery.recovery_ai;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -22,7 +21,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText firstName, lastName, email, password, confirmPassword;
     private Button registerBtn;
     private TextView loginLink;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
 
         // Registration Variables and front end links
+
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         firstName = findViewById(R.id.firstName);
@@ -39,7 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.confirmPassword);
         registerBtn = findViewById(R.id.btnSignUp);
         loginLink = findViewById(R.id.btnLogin);
-        progressDialog = new ProgressDialog(this);
 
         // Register Button Functionality
         registerBtn.setOnClickListener(new View.OnClickListener() {
@@ -54,12 +52,10 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!validateInput(emailText, passwordText, confirmPasswordText, fNameText, lNameText)) return;
 
                 registerBtn.setEnabled(false);  // Disable button to prevent multiple clicks
-                progressDialog.setMessage("Registering...");
-                progressDialog.show();
+
 
                 auth.createUserWithEmailAndPassword(emailText, passwordText)
                         .addOnCompleteListener(task -> {
-                            progressDialog.dismiss();
                             registerBtn.setEnabled(true);
 
                             if (task.isSuccessful()) {
@@ -67,24 +63,24 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 Map<String, Object> userData = new HashMap<>();
                                 userData.put("email", emailText);
-
+                                userData.put("first_name", fNameText);
+                                userData.put("last_name", lNameText);
                                 db.collection("users").document(userId)
                                         .set(userData)
                                         .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(RegisterActivity.this, "User saved in Firestore!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(RegisterActivity.this, SignUpActivity.class));
+                                            finish();
                                         })
                                         .addOnFailureListener(e -> {
-                                            Toast.makeText(RegisterActivity.this, "Failed to save user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            android.util.Log.e("RegisterActivity", "Firestore write failed", e);
+                                            Toast.makeText(RegisterActivity.this, "Account created, but profile save failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                         });
 
-                                Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
-                                //startActivity(new Intent(RegisterActivity.this, NEXT ACTIVITY));
-                                finish();
                             } else {
                                 String errorMessage = getFirebaseErrorMessage(task.getException());
                                 Toast.makeText(RegisterActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                             }
-
                         });
             }
         });
@@ -123,3 +119,4 @@ public class RegisterActivity extends AppCompatActivity {
         return "Registration Failed! Please try again.";
     }
 }
+

@@ -15,7 +15,7 @@
 
 
         <activity
-            android:name=".SignUpActivity"
+            android:name=".RegisterActivity"
             android:exported="true"
             android:theme="@style/Theme.RecoveryAI">
             <intent-filter>
@@ -23,6 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
 
         <activity
             android:name=".CreateAccountActivity"
