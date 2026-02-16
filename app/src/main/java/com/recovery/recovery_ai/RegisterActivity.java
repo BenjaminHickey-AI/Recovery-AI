@@ -9,10 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import android.app.DatePickerDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -21,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    private EditText email, password, confirmPassword, birthday;
+    private EditText firstName, lastName, email, password, confirmPassword;
     private Button registerBtn;
     private TextView loginLink;
     private ProgressDialog progressDialog;
@@ -29,32 +27,31 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_ui);
+        setContentView(R.layout.activity_create_account);
 
-        // Registration Vairables and front end links
+        // Registration Variables and front end links
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        firstName = findViewById(R.id.firstName);
+        lastName = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        confirmPassword = findViewById(R.id.Confirmpassword);
-        birthday = findViewById(R.id.Birthday);
-        registerBtn = findViewById(R.id.signUpBtn);
-        loginLink = findViewById(R.id.loginLink);
+        confirmPassword = findViewById(R.id.confirmPassword);
+        registerBtn = findViewById(R.id.btnSignUp);
+        loginLink = findViewById(R.id.btnLogin);
         progressDialog = new ProgressDialog(this);
-
-        // Handle birthday date picker
-        birthday.setOnClickListener(v -> showDatePickerDialog());
 
         // Register Button Functionality
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String fNameText = firstName.getText().toString().trim();
+                String lNameText = lastName.getText().toString().trim();
                 String emailText = email.getText().toString().trim();
                 String passwordText = password.getText().toString().trim();
                 String confirmPasswordText = confirmPassword.getText().toString().trim();
-                String birthdayText = birthday.getText().toString().trim();
 
-                if (!validateInput(emailText, passwordText, confirmPasswordText, birthdayText)) return;
+                if (!validateInput(emailText, passwordText, confirmPasswordText, fNameText, lNameText)) return;
 
                 registerBtn.setEnabled(false);  // Disable button to prevent multiple clicks
                 progressDialog.setMessage("Registering...");
@@ -70,7 +67,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 Map<String, Object> userData = new HashMap<>();
                                 userData.put("email", emailText);
-                                userData.put("birthday", birthdayText);
 
                                 db.collection("users").document(userId)
                                         .set(userData)
@@ -95,26 +91,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         loginLink.setOnClickListener(v -> startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
     }
-    private void showDatePickerDialog() {
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                RegisterActivity.this,
-                (view, selectedYear, selectedMonth, selectedDay) -> {
-                    String selectedDate = (selectedMonth + 1) + "/" + selectedDay + "/" + selectedYear;
-                    birthday.setText(selectedDate);
-                },
-                year, month, day
-        );
-
-        datePickerDialog.show();
-    }
-
-    private boolean validateInput(String email, String password, String confirmPassword, String birthday) {
-        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || birthday.isEmpty()) {
+    private boolean validateInput(String email, String password, String confirmPassword, String fname, String lName) {
+        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || fname.isEmpty() || lName.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return false;
         }

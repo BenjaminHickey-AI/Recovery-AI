@@ -19,11 +19,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.one_a_login_screen);
         auth = FirebaseAuth.getInstance();
 
         // Take user to registration activity
-        TextView registerLink = findViewById(R.id.registerLink);
+        TextView registerLink = findViewById(R.id.btnCreateAccount);
         registerLink.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
 
         // Check if the user is already logged in
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Initialize UI elements after checking login status
-        email = findViewById(R.id.email);
+        /*email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         Button loginBtn = findViewById(R.id.loginBtn);
 
@@ -58,5 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
             }
         });
+
+         */
     }
 }

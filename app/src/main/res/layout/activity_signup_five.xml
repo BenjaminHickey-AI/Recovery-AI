@@ -67,13 +67,14 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Number box -->
-            <TextView
+            <EditText
                 android:id="@+id/weight"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_marginTop="22dp"
                 android:background="@drawable/metric_box"
                 android:text="174"
+                android:inputType="number"
                 android:textColor="@android:color/white"
                 android:textSize="40sp"
                 android:textStyle="bold"
@@ -105,8 +106,7 @@
                 android:layout_marginBottom="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnNext"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontalChainStyle="packed" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <!-- Next -->
             <Button
