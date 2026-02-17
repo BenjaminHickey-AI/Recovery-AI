@@ -306,52 +306,44 @@ public class SignUpActivity extends AppCompatActivity {
         getFitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(toGetFit) {
+                if(toGetFit)
                     getFitBtn.setBackgroundResource(R.drawable.black_pill);
-                    toGetFit = false;
-                } else {
+                else
                     getFitBtn.setBackgroundResource(R.drawable.skip_pill);
-                    toGetFit = true;
-                }
+                toGetFit = !toGetFit;
             }
         });
 
         loseWeightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(toLoseWeight) {
+                if(toLoseWeight)
                     loseWeightBtn.setBackgroundResource(R.drawable.black_pill);
-                    toLoseWeight = false;
-                } else {
+                else
                     loseWeightBtn.setBackgroundResource(R.drawable.skip_pill);
-                    toLoseWeight = true;
-                }
+                toLoseWeight = !toLoseWeight;
             }
         });
 
         buildMuscleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(toBuildMuscle) {
+                if(toBuildMuscle)
                     buildMuscleBtn.setBackgroundResource(R.drawable.black_pill);
-                    toBuildMuscle = false;
-                } else {
+                else
                     buildMuscleBtn.setBackgroundResource(R.drawable.skip_pill);
-                    toBuildMuscle = true;
-                }
+                toBuildMuscle = !toBuildMuscle;
             }
         });
 
         injuryPreventionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(toPreventInjury) {
+                if(toPreventInjury)
                     injuryPreventionBtn.setBackgroundResource(R.drawable.black_pill);
-                    toPreventInjury = false;
-                } else {
+                else
                     injuryPreventionBtn.setBackgroundResource(R.drawable.skip_pill);
-                    toPreventInjury = true;
-                }
+                toPreventInjury = !toPreventInjury;
             }
         });
 

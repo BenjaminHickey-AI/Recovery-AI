@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Background image -->
     <ImageView
-        android:id="@+id/imgBackground"
+        android:id="@+id/backgroundSplash"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/splash_2c"
+        android:src="@drawable/splash_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -17,7 +18,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-
+    <ImageView
+        android:id="@+id/backgroundSplash2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
     <!-- Skip text (top right) -->
     <Button
         android:id="@+id/btnSkip"
@@ -59,7 +71,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.22" />
 
-
     <!-- Bottom actions -->
     <LinearLayout
         android:id="@+id/bottomActions"
@@ -97,7 +108,6 @@
             android:fontFamily="@font/inter_extrabold"
             android:textSize="28sp"
             android:textColor="#000000"/>
-
 
     </LinearLayout>
 

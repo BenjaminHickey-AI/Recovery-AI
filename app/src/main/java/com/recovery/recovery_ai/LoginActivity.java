@@ -29,10 +29,11 @@ public class LoginActivity extends AppCompatActivity {
         // Check if the user is already logged in
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
-            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
-            return; // Prevents further execution of onCreate()
+            return;
         }
+
 
         // Initialize UI elements after checking login status
         email = findViewById(R.id.email);
@@ -48,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 auth.signInWithEmailAndPassword(emailText, passwordText)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
                             } else {
                                 Toast.makeText(LoginActivity.this, "Login Failed!", Toast.LENGTH_SHORT).show();
