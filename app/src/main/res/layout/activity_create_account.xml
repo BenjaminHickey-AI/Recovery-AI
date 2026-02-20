@@ -23,9 +23,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="22dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/bg_glass"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnBack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -244,8 +245,26 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
     </FrameLayout>
+
+    <!-- Back button -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="120dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginBottom="26dp"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:background="@drawable/green_pill"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

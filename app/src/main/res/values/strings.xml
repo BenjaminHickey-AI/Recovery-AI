@@ -9,4 +9,26 @@
     <string name="email">email</string>
     <string name="password">password</string>
     <string name="send_code">send code</string>
+
+    <!-- Strength Exercise options -->
+    <string-array name="exercise_options">
+        <item>Select Exercise</item>
+        <item>Bench Press</item>
+        <item>Squat</item>
+        <item>Deadlift</item>
+        <item>Pull Ups</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- Cardio Activity option -->
+    <string-array name="activity_options">
+        <item>Select</item>
+        <item>Running</item>
+        <item>Walking</item>
+        <item>Cycling</item>
+        <item>Stairmaster</item>
+        <item>Rowing</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>

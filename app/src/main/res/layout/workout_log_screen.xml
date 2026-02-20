@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background -->
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_auth"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Top logo -->
+    <FrameLayout
+        android:id="@+id/logoCircle"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:background="@drawable/logo_circle_black"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_margin="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_launcher_logo"
+            android:scaleType="fitCenter" />
+    </FrameLayout>
+
+    <!-- Outer glass card -->
+    <FrameLayout
+        android:id="@+id/glassCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_glass"
+        app:layout_constraintTop_toBottomOf="@id/logoCircle"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <!-- Black inner panel -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/panel"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/panel_black"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="LOG WORKOUT"
+                    android:textColor="#66E6FF"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <!-- Toggle row -->
+                <LinearLayout
+                    android:id="@+id/toggleRow"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <!-- Strength Toggle button -->
+                    <Button
+                        android:id="@+id/btnStrength"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Strength"
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_bold"
+                        android:background="@drawable/pill_green_active"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        app:backgroundTint="@null" />
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="1dp" />
+
+                    <!-- Cardio Toggle button -->
+                    <Button
+                        android:id="@+id/btnCardio"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Cardio"
+                        android:textAllCaps="false"
+                        android:textColor="#0A0A0A"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_bold"
+                        android:background="@drawable/pill_green_dim"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+
+                <!-- Content -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/toggleRow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <!-- Strength tag -->
+                    <TextView
+                        android:id="@+id/strengthTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:translationY="-4dp"
+                        android:text="Strength"
+                        android:textColor="#66E6FF"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <!-- Exercise type -->
+                    <TextView
+                        android:id="@+id/exerciseLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="EXERCISE TYPE"
+                        android:textColor="#66E6FF"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.06"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toBottomOf="@id/strengthTag"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <!-- Exercise spinner -->
+                    <Spinner
+                        android:id="@+id/spinnerExercise"
+                        android:layout_width="110dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/dropdown_dark"
+                        android:popupBackground="@drawable/dropdown_popup"
+                        android:entries="@array/exercise_options"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:spinnerMode="dropdown"
+                        app:layout_constraintTop_toTopOf="@id/exerciseLabel"
+                        app:layout_constraintBottom_toBottomOf="@id/exerciseLabel"
+                        app:layout_constraintStart_toEndOf="@id/exerciseLabel" />
+
+                    <!-- sets / reps labels -->
+                    <TextView
+                        android:id="@+id/setsLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginStart="60dp"
+                        android:text="SETS"
+                        android:textColor="#66E6FF"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toBottomOf="@id/exerciseLabel"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/repsLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="80dp"
+                        android:text="REPS"
+                        android:textColor="#66E6FF"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toTopOf="@id/setsLabel"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <!-- Sets box -->
+                    <TextView
+                        android:id="@+id/setsValue"
+                        android:layout_width="150dp"
+                        android:layout_height="54dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/metric_cyan_box"
+                        android:text="3"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="30sp"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:gravity="center"
+                        app:layout_constraintTop_toBottomOf="@id/setsLabel"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <!-- Reps box -->
+                    <TextView
+                        android:id="@+id/repsValue"
+                        android:layout_width="150dp"
+                        android:layout_height="54dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/metric_cyan_box"
+                        android:text="10"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="30sp"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:gravity="center"
+                        app:layout_constraintTop_toBottomOf="@id/repsLabel"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <!-- Weights label -->
+                    <TextView
+                        android:id="@+id/weightLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="50dp"
+                        android:text="WEIGHTS"
+                        android:textColor="#66E6FF"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toBottomOf="@id/setsValue"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <!-- Weights box -->
+                    <TextView
+                        android:id="@+id/weightValue"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/metric_lime_box"
+                        android:text="120 lbs"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="28sp"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:gravity="center_vertical"
+                        android:paddingStart="14dp"
+                        app:layout_constraintTop_toBottomOf="@id/weightLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/saveStrength" />
+
+                    <!-- Strength Save -->
+                    <Button
+                        android:id="@+id/saveStrength"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="SAVE"
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:background="@drawable/btn_green_save"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        app:backgroundTint="@null"
+                        app:layout_constraintTop_toBottomOf="@id/weightLabel"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <!-- Cardio tag -->
+                    <TextView
+                        android:id="@+id/cardioTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Cardio"
+                        android:textColor="#66E6FF"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toBottomOf="@id/weightValue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <!-- activity type -->
+                    <TextView
+                        android:id="@+id/activityLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="ACTIVITY TYPE"
+                        android:textColor="#66E6FF"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toBottomOf="@id/cardioTag"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <!-- Activity spinner -->
+                    <Spinner
+                        android:id="@+id/spinnerActivityType"
+                        android:layout_width="110dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/dropdown_dark"
+                        android:popupBackground="@drawable/dropdown_popup"
+                        android:entries="@array/activity_options"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:spinnerMode="dropdown"
+                        app:layout_constraintTop_toTopOf="@id/activityLabel"
+                        app:layout_constraintBottom_toBottomOf="@id/activityLabel"
+                        app:layout_constraintStart_toEndOf="@id/activityLabel" />
+
+                    <!-- duration -->
+                    <TextView
+                        android:id="@+id/durationLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="DURATION"
+                        android:textColor="#66E6FF"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toBottomOf="@id/activityLabel"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/durationValue"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/metric_teal_box"
+                        android:text="20 mins"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:gravity="center_vertical"
+                        android:paddingStart="14dp"
+                        app:layout_constraintTop_toBottomOf="@id/durationLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btnSaveCardio" />
+
+                     <!-- Save Duration -->
+                    <Button
+                        android:id="@+id/btnSaveCardio"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="SAVE"
+                        android:textAllCaps="false"
+                        android:textColor="#0A0A0A"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:background="@drawable/btn_green_save_dim"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        app:backgroundTint="@null"
+                        app:layout_constraintTop_toBottomOf="@id/durationLabel"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <!-- distance optional-->
+                    <TextView
+                        android:id="@+id/distanceLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="DISTANCE (OPTIONAL)"
+                        android:textColor="#66E6FF"
+                        android:textSize="11sp"
+                        android:fontFamily="@font/inter_bold"
+                        app:layout_constraintTop_toBottomOf="@id/durationValue"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/distanceValue"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/metric_teal_box"
+                        android:text="3.1 miles"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:gravity="center_vertical"
+                        android:paddingStart="14dp"
+                        app:layout_constraintTop_toBottomOf="@id/distanceLabel"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btnSaveDistance" />
+
+                    <!-- Save Distance -->
+                    <Button
+                        android:id="@+id/btnSaveDistance"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="SAVE"
+                        android:textAllCaps="false"
+                        android:textColor="#0A0A0A"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/inter_extrabold"
+                        android:background="@drawable/btn_green_save_dim"
+                        android:backgroundTint="@null"
+                        android:stateListAnimator="@null"
+                        app:backgroundTint="@null"
+                        app:layout_constraintTop_toBottomOf="@id/distanceLabel"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <!-- Bottom nav -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="6dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_avatar"
+                android:scaleType="centerCrop" />
+        </FrameLayout>
+
+        <Space android:layout_width="14dp" android:layout_height="1dp"/>
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_active_red"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_clipboard_active"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+        <Space android:layout_width="14dp" android:layout_height="1dp"/>
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_home"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+        <Space android:layout_width="14dp" android:layout_height="1dp"/>
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_arm"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+        <Space android:layout_width="14dp" android:layout_height="1dp"/>
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_hex"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
