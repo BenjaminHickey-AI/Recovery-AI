@@ -19,7 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
     private EditText firstName, lastName, email, password, confirmPassword;
-    private Button registerBtn;
+    private Button registerBtn, backBtn;
     private TextView loginLink;
 
     @Override
@@ -38,6 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
         confirmPassword = findViewById(R.id.confirmPassword);
         registerBtn = findViewById(R.id.btnSignUp);
         loginLink = findViewById(R.id.btnLogin);
+        backBtn = findViewById(R.id.btnBack);
+
+        backBtn.setOnClickListener(v -> startActivity(new Intent(RegisterActivity.this, LoginActivity.class)));
 
         // Register Button Functionality
         registerBtn.setOnClickListener(new View.OnClickListener() {

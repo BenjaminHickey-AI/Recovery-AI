@@ -153,6 +153,7 @@
                             android:fontFamily="@font/inter_bold"/>
 
                         <TextView
+                            android:id="@+id/age"
                             android:layout_width="64dp"
                             android:layout_height="42dp"
                             android:layout_marginTop="4dp"
@@ -184,6 +185,7 @@
                             android:fontFamily="@font/inter_bold"/>
 
                         <TextView
+                            android:id="@+id/weight"
                             android:layout_width="64dp"
                             android:layout_height="42dp"
                             android:layout_marginTop="4dp"
@@ -214,6 +216,7 @@
                             android:fontFamily="@font/inter_bold"/>
 
                         <TextView
+                            android:id="@+id/height"
                             android:layout_width="64dp"
                             android:layout_height="42dp"
                             android:layout_marginTop="4dp"
