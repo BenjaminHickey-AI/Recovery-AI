@@ -30,6 +30,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    aaptOptions {
+        noCompress ("tflite")
+    }
 }
 
 dependencies {
@@ -39,6 +42,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.firebase:firebase-firestore")
+    implementation ("org.tensorflow:tensorflow-lite:2.14.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
