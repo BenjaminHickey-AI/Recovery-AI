@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Recovery-AI"
+rootProject.name = "RecoveryAIApp"
 include(":app")
  
