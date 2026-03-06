@@ -169,7 +169,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnFinish"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontalChainStyle="spread"
                 android:layout_marginEnd="14dp"/>
 
             <Button
