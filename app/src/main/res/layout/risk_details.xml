@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background -->
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_auth"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Top logo -->
+    <FrameLayout
+        android:id="@+id/logoCircle"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:background="@drawable/logo_circle_black"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_margin="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_launcher_logo"
+            android:scaleType="fitCenter"/>
+    </FrameLayout>
+
+    <!-- Outer glass card -->
+    <FrameLayout
+        android:id="@+id/glassCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/bg_glass"
+        app:layout_constraintTop_toBottomOf="@id/logoCircle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp">
+
+            <!-- Black inner panel -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/panel"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/panel_black"
+                android:padding="14dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Header -->
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Risk Details"
+                    android:textColor="#66E6FF"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:fontFamily="@font/inter_extrabold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <!--row 1-->
+                <TextView
+                    android:id="@+id/r1Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Rapid jump in\ntraining"
+                    android:textColor="#FF6B6B"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/inter_bold"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/r1ValueLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Severity:"
+                    android:textColor="#FF6B6B"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/inter_bold"
+                    app:layout_constraintTop_toBottomOf="@id/r1Label"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/r1Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="91%"
+                    android:textColor="#FF6B6B"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_extrabold"
+                    app:layout_constraintTop_toBottomOf="@id/r1ValueLabel"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/chart1"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/chart_placeholder_red"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintTop_toTopOf="@id/r1Label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:translationX="1dp"
+                    android:translationY="5dp"
+                    app:layout_constraintStart_toEndOf="@id/r1Value"
+                    android:layout_marginStart="14dp"/>
+
+                <View
+                    android:id="@+id/div1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#2B2B2B"
+                    app:layout_constraintTop_toBottomOf="@id/r1Value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <!-- row 2 -->
+                <TextView
+                    android:id="@+id/r2Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Not enough\nrest days"
+                    android:textColor="#FFA24C"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/inter_bold"
+                    app:layout_constraintTop_toBottomOf="@id/div1"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/r2ValueLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Rest days:"
+                    android:textColor="#FFA24C"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/inter_bold"
+                    app:layout_constraintTop_toBottomOf="@id/r2Label"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/r2Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1/7"
+                    android:textColor="#FFA24C"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_extrabold"
+                    app:layout_constraintTop_toBottomOf="@id/r2ValueLabel"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/chart2"
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/chart_placeholder_week"
+                    android:scaleType="fitCenter"
+                    android:translationX="5dp"
+                    app:layout_constraintTop_toTopOf="@id/r2Label"
+                    app:layout_constraintStart_toEndOf="@id/r2Value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="14dp"/>
+
+                <View
+                    android:id="@+id/div2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#2B2B2B"
+                    app:layout_constraintTop_toBottomOf="@id/r2Value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <!-- row 3 -->
+                <TextView
+                    android:id="@+id/r3Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="High weekly\nload"
+                    android:textColor="#C8FF3D"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/inter_bold"
+                    app:layout_constraintTop_toBottomOf="@id/div2"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/r3Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="85%"
+                    android:textColor="#C8FF3D"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_extrabold"
+                    app:layout_constraintTop_toBottomOf="@id/r3Label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"/>
+
+                <ImageView
+                    android:id="@+id/chart3"
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/chart_placeholder_yellow"
+                    android:scaleType="fitCenter"
+                    android:translationX="-3dp"
+                    app:layout_constraintTop_toTopOf="@id/r3Label"
+                    app:layout_constraintStart_toEndOf="@id/r3Value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="14dp"/>
+
+                <View
+                    android:id="@+id/div3"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#2B2B2B"
+                    app:layout_constraintTop_toBottomOf="@id/r3Value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <!-- row 4 -->
+                <TextView
+                    android:id="@+id/r4Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Fatigue\ncheck-in high"
+                    android:textColor="#FF66FF"
+                    android:textSize="11sp"
+                    android:fontFamily="@font/inter_bold"
+                    app:layout_constraintTop_toBottomOf="@id/div3"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/r4Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="90%"
+                    android:textColor="#FF66FF"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_extrabold"
+                    app:layout_constraintTop_toBottomOf="@id/r4Label"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"/>
+
+                <ImageView
+                    android:id="@+id/chart4"
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    android:src="@drawable/chart_placeholder_purple"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintTop_toTopOf="@id/r4Label"
+                    app:layout_constraintStart_toEndOf="@id/r4Value"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="14dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <!-- Back button -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="120dp"
+        android:layout_height="46dp"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:background="@drawable/green_pill"
+        android:stateListAnimator="@null"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="26dp"/>
+
+    <!-- See Recovery button  -->
+    <Button
+        android:id="@+id/btnSeeRecovery"
+        android:layout_width="220dp"
+        android:layout_height="46dp"
+        android:text=""
+        android:background="@drawable/cta_cyan_pill"
+        android:stateListAnimator="@null"
+        android:includeFontPadding="false"
+        android:gravity="center"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="26dp"/>
+
+    <TextView
+        android:id="@+id/seeRecoveryLabel"
+        android:layout_width="220dp"
+        android:layout_height="46dp"
+        android:text="See recovery recommendations"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:clickable="false"
+        android:focusable="false"
+        android:translationY="-0.5dp"
+        app:layout_constraintTop_toTopOf="@id/btnSeeRecovery"
+        app:layout_constraintBottom_toBottomOf="@id/btnSeeRecovery"
+        app:layout_constraintStart_toStartOf="@id/btnSeeRecovery"
+        app:layout_constraintEnd_toEndOf="@id/btnSeeRecovery"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
