@@ -479,11 +479,13 @@
             android:layout_height="58dp"
             android:background="@drawable/nav_circle_bg"
             android:padding="6dp">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/nav_avatar"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:onClick="onProfileClick"
+                android:src="@drawable/nav_avatar" />
         </FrameLayout>
 
         <Space android:layout_width="14dp" android:layout_height="1dp"/>
@@ -511,6 +513,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_home"
+                android:onClick="onDashboardClick"
                 android:scaleType="fitCenter" />
         </FrameLayout>
 
@@ -525,6 +528,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_arm"
+                android:onClick="onRecoveryClick"
                 android:scaleType="fitCenter" />
         </FrameLayout>
 

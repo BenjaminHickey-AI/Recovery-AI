@@ -354,6 +354,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_clipboard_active"
+                android:onClick="onLogClick"
                 android:scaleType="fitCenter"/>
         </FrameLayout>
 
@@ -368,6 +369,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_home"
+                android:onClick="onDashboardClick"
                 android:scaleType="fitCenter"/>
         </FrameLayout>
 
@@ -382,6 +384,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_arm"
+                android:onClick="onRecoveryClick"
                 android:scaleType="fitCenter"/>
         </FrameLayout>
 

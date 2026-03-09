@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         userId = user.getUid();
 
         loadData();
-        loadProfileFragment();
+        loadDashboardFragment();
     }
 
     private void loadData() {
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         Log.d("Firestore", "No biometrics/latest found");
                     }
-                    loadProfileFragment();
                 })
                 .addOnFailureListener(e -> Log.e("Firestore", "Error loading biometrics/latest", e));
 
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         Log.d("Firestore", "No user doc found");
                     }
-                    loadProfileFragment();
                 })
                 .addOnFailureListener(e -> Log.e("Firestore", "Error loading user doc", e));
     }
@@ -94,5 +93,32 @@ public class MainActivity extends AppCompatActivity {
         height.setText(user_height);
     }
 
+    private void loadDashboardFragment(){
+        setContentView(R.layout.dashboard);
+    }
+
+    private void loadRecoveryFragment(){
+        setContentView(R.layout.recovery_recommendations);
+    }
+
+    private void loadLogWorkoutFragment(){
+        setContentView(R.layout.workout_log_screen);
+    }
+
+    public void onProfileClick(View view) {
+        loadProfileFragment();
+    }
+
+    public void onRecoveryClick(View view) {
+        loadRecoveryFragment();
+    }
+
+    public void onDashboardClick(View view) {
+        loadDashboardFragment();
+    }
+
+    public void onLogClick(View view) {
+        loadLogWorkoutFragment();
+    }
 
 }
