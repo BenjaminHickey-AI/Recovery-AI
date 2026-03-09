@@ -103,6 +103,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadLogWorkoutFragment(){
         setContentView(R.layout.workout_log_screen);
+        Button strengthBtn, cardioBtn;
+        strengthBtn = findViewById(R.id.btnStrength);
+        cardioBtn = findViewById(R.id.btnCardio);
+        strengthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strengthBtn.setBackgroundResource(R.drawable.pill_green_active);
+                cardioBtn.setBackgroundResource(R.drawable.pill_green_dim);
+            }
+        });
+
+        cardioBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strengthBtn.setBackgroundResource(R.drawable.pill_green_dim);
+                cardioBtn.setBackgroundResource(R.drawable.pill_green_active);
+            }
+        });
     }
 
     public void onProfileClick(View view) {
