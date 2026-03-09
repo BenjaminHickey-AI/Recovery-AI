@@ -28,6 +28,20 @@ Instead of generating workouts, Recovery AI acts as a decision-support tool, hel
 •	Explainable risk reasoning
 •	Basic recovery and training recommendations
 
+## Development Stage: BETA
+Features to be implemented this month
+•	UX for logging work outs
+•	Rest day tracking
+•	Detection of rapid volume increases
+•	Weekly training load calculation
+
+•	Finalize AI integration for:
+•	Injury risk scoring (Low / Moderate / High) (custom AI)
+•	Explainable risk reasoning (OpenAI API)
+•	Basic recovery and training recommendations (OpenAI API)
+
+
+
 ## 🤖 Artificial Intelligence Component
 The core injury risk scoring is powered by a classical machine learning classification model trained on fitness and injury-related datasets containing thousands of data points.
 The model:
