@@ -1,30 +1,14 @@
 package com.recovery.recovery_ai;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.json.JSONObject;
-import org.json.JSONArray;
-
-import okhttp3.RequestBody;
-import okhttp3.MediaType;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.OkHttpClient;
-import okhttp3.Call;
-import okhttp3.Callback;
 
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-
 
 public class MainActivity extends AppCompatActivity {
     // Our injury model
@@ -56,55 +40,39 @@ public class MainActivity extends AppCompatActivity {
         // Initializing our LogWorkout class
         logWorkout = new LogWorkout(tflite);
 
-        // TODO Button action - once the inputs have been implemented correctly then we can write the predict logic that sends the data to the model and outputs the risk!!!
-    }
-
-    private void getRecoveryAdvice(String risk) {
-        new Thread(() -> {
+        // TODO Until we understand what is happening with the inputs this logic will not be in use.
+        /*buttonPredict.setOnClickListener(v -> {
             try {
-                OkHttpClient client = new OkHttpClient();
-                String prompt = "A user has a " + risk + " injury risk. Give 3 short recovery suggestions based on the risk level.";
+                int duration = Integer.parseInt(etDuration.getText().toString());
+                int intensity = Integer.parseInt(etIntensity.getText().toString());
+                int heartRate = Integer.parseInt(etHeartRate.getText().toString());
 
-                JSONObject message = new JSONObject();
-                message.put("role", "user");
-                message.put("content", prompt);
+                // Calling the model
+                String risk = logWorkout.predictInjuryRisk(intensity, duration, heartRate);
+                tvResult.setText("Injury Risk: " + risk);
+                if (risk == "Medium" || risk == "High") {
+                    RecoverySuggestions.getRecoveryAdvice(
+                            risk,
+                            new RecoverySuggestions.SuggestionCallBack() {
+                                @Override
+                                public void onSuggestionRecieved(String suggestions) {
+                                    runOnUiThread(() -> {
+                                        tvResult.append("\n\nRecovery Suggestions:\n" + suggestions);
+                                    });
+                                }
 
-                JSONArray messages = new JSONArray();
-                messages.put(message);
-
-                JSONObject jsonBody = new JSONObject();
-                jsonBody.put("model", "gpt-4.1-mini");
-                jsonBody.put("messages", messages);
-
-                RequestBody requestBody = RequestBody.create(
-                        jsonBody.toString(),
-                        MediaType.parse("application/json")
-                );
-
-                Request request = new Request.Builder()
-                        .url("https://api.openai.com/v1/chat/completions")
-                        .addHeader("Authorization", "Bearer YOUR_API_KEY")
-                        .post(requestBody)
-                        .build();
-
-                Response response = client.newCall(request).execute();
-                String responseBody = response.body().string();
-
-                JSONObject result = new JSONObject(responseBody);
-
-                String advice = result
-                        .getJSONArray("choices")
-                        .getJSONObject(0)
-                        .getJSONObject("message")
-                        .getString("content");
-
-                runOnUiThread(() -> {
-                    tvResult.append("\n\nAdvice:\n" + advice);
-                });
-
+                                @Override
+                                public void onError(String error) {
+                                    runOnUiThread(() -> {
+                                        tvResult.append("\n\nError getting suggestions please try again");
+                                    });
+                                }
+                            }
+                    );
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-        }).start();
+            }*/
     }
-    }
+
+}
