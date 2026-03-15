@@ -221,8 +221,8 @@
                         app:layout_constraintTop_toTopOf="@id/setsLabel"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <!-- Sets box -->
-                    <TextView
+                    <!-- sets input replaces textView placeholder -->
+                    <EditText
                         android:id="@+id/setsValue"
                         android:layout_width="150dp"
                         android:layout_height="54dp"
@@ -234,11 +234,16 @@
                         android:textSize="30sp"
                         android:fontFamily="@font/inter_extrabold"
                         android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:padding="0dp"
                         app:layout_constraintTop_toBottomOf="@id/setsLabel"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <!-- Reps box -->
-                    <TextView
+                    <!-- reps input replaces textView placeholder -->
+                    <EditText
                         android:id="@+id/repsValue"
                         android:layout_width="150dp"
                         android:layout_height="54dp"
@@ -251,6 +256,11 @@
                         android:textSize="30sp"
                         android:fontFamily="@font/inter_extrabold"
                         android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:inputType="number"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
+                        android:padding="0dp"
                         app:layout_constraintTop_toBottomOf="@id/repsLabel"
                         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -268,8 +278,8 @@
                         app:layout_constraintTop_toBottomOf="@id/setsValue"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <!-- Weights box -->
-                    <TextView
+                    <!-- weights input replaces textView placeholder -->
+                    <EditText
                         android:id="@+id/weightValue"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
@@ -282,7 +292,12 @@
                         android:textSize="28sp"
                         android:fontFamily="@font/inter_extrabold"
                         android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
                         android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
                         app:layout_constraintTop_toBottomOf="@id/weightLabel"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/saveStrength" />
@@ -364,7 +379,8 @@
                         app:layout_constraintTop_toBottomOf="@id/activityLabel"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView
+                    <!-- duration input replaces textView placeholder -->
+                    <EditText
                         android:id="@+id/durationValue"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
@@ -377,12 +393,17 @@
                         android:textSize="24sp"
                         android:fontFamily="@font/inter_extrabold"
                         android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionNext"
                         android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
                         app:layout_constraintTop_toBottomOf="@id/durationLabel"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/btnSaveCardio" />
 
-                     <!-- Save Duration -->
+                    <!-- Save Duration -->
                     <Button
                         android:id="@+id/btnSaveCardio"
                         android:layout_width="150dp"
@@ -415,7 +436,8 @@
                         app:layout_constraintTop_toBottomOf="@id/durationValue"
                         app:layout_constraintStart_toStartOf="parent" />
 
-                    <TextView
+                    <!-- distance input replaces textView placeholder -->
+                    <EditText
                         android:id="@+id/distanceValue"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
@@ -428,7 +450,12 @@
                         android:textSize="24sp"
                         android:fontFamily="@font/inter_extrabold"
                         android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
                         android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
                         app:layout_constraintTop_toBottomOf="@id/distanceLabel"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/btnSaveDistance" />
