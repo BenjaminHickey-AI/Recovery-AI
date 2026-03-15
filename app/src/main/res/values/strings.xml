@@ -47,4 +47,19 @@
         <item>12</item>
     </string-array>
 
+    <string-array name="goal_options">
+        <item>Get Fit</item>
+        <item>Lose Weight</item>
+        <item>Build Muscle</item>
+        <item>Injury Prevention</item>
+    </string-array>
+
+    <string-array name="injury_focus_options">
+        <item>Shoulder</item>
+        <item>Knee</item>
+        <item>Back</item>
+        <item>Hip</item>
+        <item>Ankle</item>
+    </string-array>
+
 </resources>
