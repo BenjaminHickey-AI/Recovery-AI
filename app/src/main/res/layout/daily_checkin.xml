@@ -348,7 +348,7 @@
                 app:layout_constraintTop_toBottomOf="@id/feelWrap"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <!-- small spinner -->
+            <!-- input components spinner for hours slept -->
             <Spinner
                 android:id="@+id/spinnerSleepHours"
                 android:layout_width="72dp"
