@@ -1,11 +1,11 @@
 package com.recovery.recovery_ai;
 
+import Logic.*;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,8 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
-    //page ui elements
-    private Button nextBtn, backBtn;
+
+
 
     //user input variables
     private int user_age = 0, user_weight = 0;
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         Button strengthBtn, cardioBtn;
         strengthBtn = findViewById(R.id.btnStrength);
         cardioBtn = findViewById(R.id.btnCardio);
+
         strengthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +122,18 @@ public class MainActivity extends AppCompatActivity {
                 cardioBtn.setBackgroundResource(R.drawable.pill_green_active);
             }
         });
+    }
+
+    private void loadRiskDetailsFragment() {
+        setContentView(R.layout.risk_details);
+    }
+
+    private void loadSettingsFragment() {
+        setContentView(R.layout.settings);
+    }
+
+    private void loadTrendsFragment() {
+        setContentView(R.layout.trends);
     }
 
     public void onProfileClick(View view) {
@@ -139,4 +152,15 @@ public class MainActivity extends AppCompatActivity {
         loadLogWorkoutFragment();
     }
 
+    public void onRiskDetailsClick(View view) {
+        loadRiskDetailsFragment();
+    }
+
+    public void onSettingsClick(View view) {
+        loadSettingsFragment();
+    }
+
+    public void onTrendsClick(View view) {
+        loadTrendsFragment();
+    }
 }

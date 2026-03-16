@@ -26,7 +26,6 @@
         android:padding="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_margin="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -590,6 +589,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onProfileClick"
                 android:src="@drawable/nav_avatar"
                 android:scaleType="centerCrop" />
         </FrameLayout>
@@ -604,6 +604,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onLogClick"
                 android:src="@drawable/nav_clipboard_active"
                 android:scaleType="fitCenter" />
         </FrameLayout>
@@ -618,6 +619,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onDashboardClick"
                 android:src="@drawable/nav_home"
                 android:scaleType="fitCenter" />
         </FrameLayout>
@@ -632,6 +634,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onRecoveryClick"
                 android:src="@drawable/nav_arm"
                 android:scaleType="fitCenter" />
         </FrameLayout>

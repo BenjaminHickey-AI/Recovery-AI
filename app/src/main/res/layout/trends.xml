@@ -293,6 +293,7 @@
         android:textSize="16sp"
         android:background="@drawable/green_pill"
         android:stateListAnimator="@null"
+        android:onClick="onDashboardClick"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

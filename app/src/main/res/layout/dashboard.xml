@@ -314,6 +314,7 @@
                         android:clickable="false"
                         android:focusable="false"
                         android:translationY="-0.5dp"
+                        android:onClick="onRiskDetailsClick"
                         app:layout_constraintTop_toTopOf="@id/btnWhy"
                         app:layout_constraintBottom_toBottomOf="@id/btnWhy"
                         app:layout_constraintStart_toStartOf="@id/btnWhy"
@@ -488,6 +489,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
+                        android:onClick="onTrendsClick"
                         android:gravity="center"
                         android:clickable="false"
                         android:focusable="false"
@@ -794,6 +796,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onSettingsClick"
                 android:src="@drawable/nav_hex"
                 android:scaleType="fitCenter"/>
         </FrameLayout>
