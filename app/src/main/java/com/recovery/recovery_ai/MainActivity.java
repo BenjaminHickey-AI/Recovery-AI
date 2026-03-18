@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     //user input variables
+    String name = "", description = "";
+    int duration = 0, intensity = 0;
     private int user_age = 0, user_weight = 0;
     private String user_height = "", user_first, user_last, userId;
     private Bitmap user_image;
@@ -105,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadLogWorkoutFragment(){
         setContentView(R.layout.workout_log_screen);
-        //input variables
-        String name = "", description = "";
-        int duration = 0, intensity = 0;
 
         //UI variables
         Button saveBtn;
