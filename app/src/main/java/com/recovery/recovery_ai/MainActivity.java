@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -103,23 +105,73 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadLogWorkoutFragment(){
         setContentView(R.layout.workout_log_screen);
-        Button strengthBtn, cardioBtn;
-        strengthBtn = findViewById(R.id.btnStrength);
-        cardioBtn = findViewById(R.id.btnCardio);
+        //input variables
+        String name = "", description = "";
+        int duration = 0, intensity = 0;
 
-        strengthBtn.setOnClickListener(new View.OnClickListener() {
+        //UI variables
+        Button saveBtn;
+        ImageView veryLightBtn, lightBtn, mildBtn, hardBtn, veryHardBtn, maxBtn;
+        EditText nameText, descText, durationText;
+
+        //text inputs
+        nameText = findViewById(R.id.etExerciseName);
+        nameText.setText(name);
+        descText = findViewById(R.id.etDescription);
+        descText.setText(description);
+        durationText = findViewById(R.id.etDurationValue);
+        durationText.setText(Integer.toString(duration));
+
+        //buttons
+        saveBtn = findViewById(R.id.btnSaveIntensity);
+        veryLightBtn = findViewById(R.id.intensityVeryLight);
+        lightBtn = findViewById(R.id.intensityLight);
+        mildBtn = findViewById(R.id.intensityMild);
+        hardBtn = findViewById(R.id.intensityHard);
+        veryHardBtn = findViewById(R.id.intensityVeryHard);
+        maxBtn = findViewById(R.id.intensityMax);
+
+        veryLightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                strengthBtn.setBackgroundResource(R.drawable.pill_green_active);
-                cardioBtn.setBackgroundResource(R.drawable.pill_green_dim);
+                intensity = 1;
+            }
+        });
+        lightBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 2;
+            }
+        });
+        mildBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 4;
+            }
+        });
+        hardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 6;
+            }
+        });
+        veryHardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 8;
+            }
+        });
+        maxBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 10;
             }
         });
 
-        cardioBtn.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                strengthBtn.setBackgroundResource(R.drawable.pill_green_dim);
-                cardioBtn.setBackgroundResource(R.drawable.pill_green_active);
+
             }
         });
     }

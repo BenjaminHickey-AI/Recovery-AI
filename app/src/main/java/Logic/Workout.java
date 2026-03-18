@@ -1,47 +1,48 @@
 package Logic;
 
-import java.util.Vector;
+import java.time.LocalDate;
+public class Workout {
 
-abstract class Workout {
-    public String name, type, date, docID;
+    private String name;
+    private String description;
+    private String date;
+    private String docID;
 
+    private int duration;
+    private int intensity;
 
-    public Workout(String _name, String _type, String _date) {
-        date = _date;
-        name = _name;
-        docID = "";
-        type = _type;
+    public Workout(String name, String description, int duration, int intensity) {
+        this.date = LocalDate.now().toString(); // this will look like: 2026-03-18
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.intensity = intensity;
+        this.docID = "";
     }
 
-    public Workout(String _name, String _type, String _date, String _docID) {
-        date = _date;
-        name = _name;
-        docID = _docID;
-        type = _type;
+    public Workout(String name, String description, String date, int duration, int intensity, String docID) {
+        this.date = date;
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.intensity = intensity;
+        this.docID = docID;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(String _name) {
-        name = _name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String _type) {
-        type = _type;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setCompletionDate(String _date) {
-        date = _date;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getDocID()
@@ -49,8 +50,33 @@ abstract class Workout {
         return docID;
     }
 
-    public void setDocID(String _docID)
+    public void setDocID(String docID)
     {
-        docID = _docID;
+        this.docID = docID;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getIntensity() {
+        return intensity;
+    }
+
+    public void setIntensity(int intensity) {
+        this.intensity = intensity;
+    }
+
 }
