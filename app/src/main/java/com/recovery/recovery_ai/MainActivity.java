@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         //UI variables
         Button saveBtn;
         TextView intensityDescription;
-        ImageView veryLightBtn, lightBtn, mildBtn, hardBtn, veryHardBtn, maxBtn;
+        ImageView lightBtn, mildBtn,averageBtn, hardBtn, veryHardBtn, maxBtn;
         EditText nameText, descText, durationText;
 
         //text inputs
@@ -96,28 +96,28 @@ public class MainActivity extends AppCompatActivity {
 
         //buttons
         saveBtn = findViewById(R.id.btnSaveIntensity);
-        veryLightBtn = findViewById(R.id.intensityVeryLight);
         lightBtn = findViewById(R.id.intensityLight);
         mildBtn = findViewById(R.id.intensityMild);
+        averageBtn = findViewById(R.id.intensityAverage);
         hardBtn = findViewById(R.id.intensityHard);
         veryHardBtn = findViewById(R.id.intensityVeryHard);
         maxBtn = findViewById(R.id.intensityMax);
 
-        veryLightBtn.setOnClickListener(new View.OnClickListener() {
+        lightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intensity = 1;
                 intensityDescription.setText("Light Activity - You can maintain this activity for hours, easy to breathe and carry a conversation.");
             }
         });
-        lightBtn.setOnClickListener(new View.OnClickListener() {
+        mildBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intensity = 3;
                 intensityDescription.setText("Mild Activity - Occasionally Breathing hard, can hold a short conversation.");
             }
         });
-        mildBtn.setOnClickListener(new View.OnClickListener() {
+        averageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intensity = 5;
