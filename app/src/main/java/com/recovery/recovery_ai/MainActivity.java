@@ -15,7 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
@@ -24,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     //user input variables
-    String name = "", description = "";
-    int duration = 0, intensity = 0;
+    int intensity = 0;
+    private Vector<Workout> workouts = new Vector<Workout>();
     private int user_age = 0, user_weight = 0;
     private String user_height = "", user_first, user_last, userId;
     private Bitmap user_image;
@@ -41,45 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
         userId = user.getUid();
 
-        loadData();
+        loadDataFromFirestore();
         loadDashboardFragment();
     }
 
-    private void loadData() {
-        //load biometric data
-        db.collection("users")
-                .document(userId)
-                .collection("biometrics")
-                .document("latest")
-                .get()
-                .addOnSuccessListener(doc -> {
-                    if (doc.exists()) {
-                        Long ageL = doc.getLong("age");
-                        Long weightL = doc.getLong("weight");
 
-                        user_age = (ageL != null) ? ageL.intValue() : 0;
-                        user_weight = (weightL != null) ? weightL.intValue() : 0;
-                        user_height = doc.getString("height") != null ? doc.getString("height") : "";
-                    } else {
-                        Log.d("Firestore", "No biometrics/latest found");
-                    }
-                })
-                .addOnFailureListener(e -> Log.e("Firestore", "Error loading biometrics/latest", e));
-
-        // Load name from users
-        db.collection("users")
-                .document(userId)
-                .get()
-                .addOnSuccessListener(doc -> {
-                    if (doc.exists()) {
-                        user_first = doc.getString("first_name") != null ? doc.getString("first_name") : "";
-                        user_last = doc.getString("last_name") != null ? doc.getString("last_name") : "";
-                    } else {
-                        Log.d("Firestore", "No user doc found");
-                    }
-                })
-                .addOnFailureListener(e -> Log.e("Firestore", "Error loading user doc", e));
-    }
 
     private void loadProfileFragment(){
         setContentView(R.layout.profile_screen);
@@ -110,16 +82,17 @@ public class MainActivity extends AppCompatActivity {
 
         //UI variables
         Button saveBtn;
+        TextView intensityDescription;
         ImageView veryLightBtn, lightBtn, mildBtn, hardBtn, veryHardBtn, maxBtn;
         EditText nameText, descText, durationText;
 
         //text inputs
         nameText = findViewById(R.id.etExerciseName);
-        nameText.setText(name);
         descText = findViewById(R.id.etDescription);
-        descText.setText(description);
         durationText = findViewById(R.id.etDurationValue);
-        durationText.setText(Integer.toString(duration));
+
+        intensityDescription = findViewById(R.id.intensityDescription);
+        intensityDescription.setText("Select an intensity");
 
         //buttons
         saveBtn = findViewById(R.id.btnSaveIntensity);
@@ -134,43 +107,55 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intensity = 1;
+                intensityDescription.setText("Light Activity - You can maintain this activity for hours, easy to breathe and carry a conversation.");
             }
         });
         lightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intensity = 2;
+                intensity = 3;
+                intensityDescription.setText("Mild Activity - Occasionally Breathing hard, can hold a short conversation.");
             }
         });
         mildBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intensity = 4;
+                intensity = 5;
+                intensityDescription.setText("Average Activity - Breathing heavily, can hold a short conversation. Still somewhat comfortable, but becoming noticeably more challenging.");
             }
         });
         hardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intensity = 6;
+                intensityDescription.setText("Hard Activity - Borderline uncomfortable. Short of breath, can speak a sentence.");
             }
         });
         veryHardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intensity = 8;
+                intensityDescription.setText("Very Hard Activity - Very difficult to maintain exercise intensity. Can barely breathe and speak only a few words.");
             }
         });
         maxBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intensity = 10;
+                intensityDescription.setText("Maximum Activity - Feels almost impossible to keep going. Completely out of breath, unable to talk. Cannot maintain for more than a very short time.");
             }
         });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (saveBtn != null) saveBtn.setEnabled(false);
+                workouts.add(new Workout(nameText.getText().toString(), descText.getText().toString(), Integer.parseInt(durationText.getText().toString()), intensity));
+                nameText.setText("");
+                descText.setText("");
+                durationText.setText("0");
+                intensityDescription.setText("Select an intensity");
+                saveWorkoutToFirestore(workouts.get(workouts.size()-1));
             }
         });
     }
@@ -213,5 +198,91 @@ public class MainActivity extends AppCompatActivity {
 
     public void onTrendsClick(View view) {
         loadTrendsFragment();
+    }
+
+    private void loadDataFromFirestore() {
+        //load biometric data
+        db.collection("users")
+                .document(userId)
+                .collection("biometrics")
+                .document("latest")
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        Long ageL = doc.getLong("age");
+                        Long weightL = doc.getLong("weight");
+
+                        user_age = (ageL != null) ? ageL.intValue() : 0;
+                        user_weight = (weightL != null) ? weightL.intValue() : 0;
+                        user_height = doc.getString("height") != null ? doc.getString("height") : "";
+                    } else {
+                        Log.d("Firestore", "No biometrics/latest found");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Error loading biometrics/latest", e));
+
+        // Load name from users
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        user_first = doc.getString("first_name") != null ? doc.getString("first_name") : "";
+                        user_last = doc.getString("last_name") != null ? doc.getString("last_name") : "";
+                    } else {
+                        Log.d("Firestore", "No user doc found");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Error loading user doc", e));
+    }
+
+    private void saveWorkoutToFirestore(Workout workout)
+    {
+        db = FirebaseFirestore.getInstance();
+
+        //
+        Map<String, Object> workoutMap = new HashMap<>();
+        workoutMap.put("name", workout.getName());
+        workoutMap.put("description", workout.getDescription());
+        workoutMap.put("date", workout.getDate());
+        workoutMap.put("intensity", workout.getIntensity());
+        workoutMap.put("duration", workout.getDuration());
+
+
+        if(!workout.getDocID().isEmpty())
+        {
+            db.collection("users").document(userId).collection("workouts").get().addOnSuccessListener(querySnapshot ->
+            {
+                for (DocumentSnapshot document : querySnapshot.getDocuments())
+                {
+                    if (document.getId().equals(workout.getDocID()))
+                    {
+                        db.collection("users").document(userId).collection("workouts").document(workout.getDocID()).set(workoutMap);
+                    }
+                }
+            }).addOnFailureListener(e -> Log.w("Firestore", "Error getting documents", e));
+        }
+        else
+        {
+            db.collection("users").document(userId).collection("workouts").add(workoutMap).addOnSuccessListener(documentReference ->
+            {
+                for(int i = 0; i < workouts.size(); i++)
+                {
+                    if(workouts.get(i).equals(workout))
+                        workouts.get(i).setDocID(documentReference.getId());
+                }
+                Log.d("Firestore", "Workout saved with ID: " + documentReference.getId());
+            }).addOnFailureListener(e ->
+            {
+                Log.e("Firestore", "Error saving goal", e);
+            });
+        }
+    }
+
+    private void deleteWorkoutFromFirestore(Workout workout)
+    {
+        db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("users").document(userId).collection("workouts").document(workout.getDocID());
+        docRef.delete().addOnSuccessListener(aVoid -> Log.d("Firestore", "Document successfully deleted")).addOnFailureListener(e -> Log.w("Firestore", "Error deleting document", e));
     }
 }
