@@ -315,7 +315,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/intensity_very_light"
+                            android:src="@drawable/intensity_light"
                             android:scaleType="fitXY"
                             android:contentDescription="@null" />
 
@@ -324,7 +324,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/intensity_light"
+                            android:src="@drawable/intensity_mild"
                             android:scaleType="fitXY"
                             android:contentDescription="@null" />
 
@@ -333,7 +333,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:src="@drawable/intensity_mild"
+                            android:src="@drawable/intensity_average"
                             android:scaleType="fitXY"
                             android:contentDescription="@null" />
 
