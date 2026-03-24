@@ -240,37 +240,7 @@
                         android:layout_width="14dp"
                         android:layout_height="1dp" />
 
-                    <!-- save -->
-                    <FrameLayout
-                        android:id="@+id/saveDurationWrap"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
 
-                        <Button
-                            android:id="@+id/btnSaveDuration"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text=""
-                            android:background="@drawable/save_pill_workout"
-                            android:stateListAnimator="@null"
-                            android:includeFontPadding="false"
-                            app:backgroundTint="@null" />
-
-                        <TextView
-                            android:id="@+id/saveDurationLabel"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="SAVE"
-                            android:textColor="#0A0A0A"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:fontFamily="@font/inter_extrabold"
-                            android:gravity="center"
-                            android:includeFontPadding="false"
-                            android:clickable="false"
-                            android:focusable="false" />
-                    </FrameLayout>
 
                 </LinearLayout>
 
