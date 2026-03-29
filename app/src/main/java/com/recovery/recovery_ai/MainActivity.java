@@ -164,22 +164,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadHistoryFragment(){
         setContentView(R.layout.workout_log_history);
-    }
 
-    private void loadRiskDetailsFragment() {
-        setContentView(R.layout.risk_details);
     }
 
     private void loadSettingsFragment() {
         setContentView(R.layout.settings);
-    }
-
-    private void loadTrendsFragment() {
-        setContentView(R.layout.trends);
-    }
-
-    public void onProfileClick(View view) {
-        loadProfileFragment();
     }
 
     public void onRecoveryClick(View view) {
@@ -194,16 +183,8 @@ public class MainActivity extends AppCompatActivity {
         loadLogWorkoutFragment();
     }
 
-    public void onRiskDetailsClick(View view) {
-        loadRiskDetailsFragment();
-    }
-
     public void onSettingsClick(View view) {
         loadSettingsFragment();
-    }
-
-    public void onTrendsClick(View view) {
-        loadTrendsFragment();
     }
 
     public void onHistoryClick(View view) {
