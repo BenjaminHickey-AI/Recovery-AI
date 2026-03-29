@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Background -->
     <ImageView
         android:id="@+id/bg"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_auth"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Top logo circle -->
     <FrameLayout
         android:id="@+id/logoCircle"
         android:layout_width="62dp"
         android:layout_height="62dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/logo_circle_black"
         android:padding="8dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_margin="36dp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imgLogo"
@@ -38,676 +35,478 @@
             android:src="@drawable/ic_launcher_logo" />
     </FrameLayout>
 
-
     <FrameLayout
         android:id="@+id/glassCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_glass"
-        app:layout_constraintTop_toBottomOf="@id/logoCircle"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_glass_dashboard"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/logoCircle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="12dp">
+            android:padding="14dp">
 
-            <!-- ===== Top widgets row ===== -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/topWidgetsRow"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <!-- Recovery Recommendations card -->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardRecoveryRec"
-                    android:layout_width="0dp"
-                    android:layout_height="160dp"
-                    android:layout_marginEnd="10dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="10dp"
-                    app:cardUseCompatPadding="false"
-                    app:cardPreventCornerOverlap="true"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/cardHighRisk"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:backgroundTint="@null"
-                    app:layout_constraintWidth_percent="0.52">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/widget_card"
-                        app:cardBackgroundColor="@android:color/transparent"
-                        app:backgroundTint="@null"
-                        android:padding="8dp">
-
-                        <!-- Title -->
-                        <TextView
-                            android:id="@+id/recTitle"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="Recovery Recommendations"
-                            android:textColor="#FFFFFF"
-                            android:textSize="10sp"
-                            android:fontFamily="@font/inter_bold"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" />
-
-                        <!-- Thumbnail -->
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/recThumbCard"
-                            android:layout_width="0dp"
-                            android:layout_height="78dp"
-                            android:layout_marginTop="6dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="0dp"
-                            app:cardUseCompatPadding="false"
-                            app:cardPreventCornerOverlap="true"
-                            app:layout_constraintTop_toBottomOf="@id/recTitle"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-                            <ImageView
-                                android:id="@+id/imgRecThumb"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/recovery_thumb_placeholder" />
-                        </androidx.cardview.widget.CardView>
-
-                        <!-- Bottom white info strip -->
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/recInfoBar"
-                            android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="6dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="0dp"
-                            app:cardUseCompatPadding="false"
-                            app:cardPreventCornerOverlap="true"
-                            app:cardBackgroundColor="#FFFFFF"
-                            app:layout_constraintTop_toBottomOf="@id/recThumbCard"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:paddingStart="8dp"
-                                android:paddingEnd="8dp"
-                                android:paddingTop="6dp"
-                                android:paddingBottom="6dp">
-
-                                <TextView
-                                    android:id="@+id/recCategory"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="Stretch &amp; Recovery"
-                                    android:textColor="#0E0E0E"
-                                    android:textSize="9sp"
-                                    android:fontFamily="@font/inter_regular"
-                                    android:maxLines="1"
-                                    android:ellipsize="end"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/btnSeeMore" />
-
-                                <TextView
-                                    android:id="@+id/recMeta"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="10-Minute Standing Mobility"
-                                    android:textColor="#0E0E0E"
-                                    android:textSize="6sp"
-                                    android:textStyle="bold"
-                                    android:fontFamily="@font/inter_bold"
-                                    android:maxLines="1"
-                                    android:ellipsize="end"
-                                    app:layout_constraintTop_toBottomOf="@id/recCategory"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@id/btnSeeMore"
-                                    app:layout_constraintBottom_toBottomOf="parent" />
-
-                                <!-- Button background -->
-                                <Button
-                                    android:id="@+id/btnSeeMore"
-                                    android:layout_width="66dp"
-                                    android:layout_height="28dp"
-                                    android:text=""
-                                    android:textAllCaps="false"
-                                    android:background="@drawable/mini_dark_button"
-                                    android:stateListAnimator="@null"
-                                    android:includeFontPadding="false"
-                                    android:gravity="center"
-                                    app:backgroundTint="@null"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent" />
-
-                                <!-- Text -->
-                                <TextView
-                                    android:id="@+id/seeMoreLabel"
-                                    android:layout_width="66dp"
-                                    android:layout_height="28dp"
-                                    android:text="See\nMore"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="9sp"
-                                    android:textStyle="bold"
-                                    android:fontFamily="@font/inter_bold"
-                                    android:gravity="center"
-                                    android:includeFontPadding="false"
-                                    android:clickable="false"
-                                    android:focusable="false"
-                                    android:translationY="-1dp"
-                                    app:layout_constraintTop_toTopOf="@id/btnSeeMore"
-                                    app:layout_constraintBottom_toBottomOf="@id/btnSeeMore"
-                                    app:layout_constraintStart_toStartOf="@id/btnSeeMore"
-                                    app:layout_constraintEnd_toEndOf="@id/btnSeeMore" />
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                        </androidx.cardview.widget.CardView>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </androidx.cardview.widget.CardView>
-
-                <!-- High Risk card -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cardHighRisk"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/widget_card"
-                    android:padding="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/cardRecoveryRec"
-                    app:layout_constraintWidth_percent="0.44">
-
-                    <TextView
-                        android:id="@+id/highRisk"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="High Risk"
-                        android:textColor="#EDEDED"
-                        android:textSize="10sp"
-                        android:fontFamily="@font/inter_bold"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <!-- Ring area -->
-                    <FrameLayout
-                        android:id="@+id/riskRingWrap"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="6dp"
-                        app:layout_constraintTop_toBottomOf="@id/highRisk"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/btnWhy">
-
-                        <!-- Ring placeholder image -->
-                        <ImageView
-                            android:id="@+id/imgRiskRing"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/risk_ring_placeholder"
-                            android:scaleType="fitCenter"
-                            android:adjustViewBounds="true" />
-
-                        <!-- Score-->
-                        <TextView
-                            android:id="@+id/riskScore"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="83"
-                            android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/inter_extrabold"
-                            android:layout_gravity="center" />
-                    </FrameLayout>
-
-                    <!-- Why button -->
-                    <Button
-                        android:id="@+id/btnWhy"
-                        android:layout_width="46dp"
-                        android:layout_height="22dp"
-                        android:text=""
-                        android:background="@drawable/mini_dark_button"
-                        android:stateListAnimator="@null"
-                        android:includeFontPadding="false"
-                        android:gravity="center"
-                        app:backgroundTint="@null"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <!-- Why label-->
-                    <TextView
-                        android:id="@+id/whyLabel"
-                        android:layout_width="46dp"
-                        android:layout_height="22dp"
-                        android:text="Why?"
-                        android:textAllCaps="false"
-                        android:textSize="9sp"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"
-                        android:fontFamily="@font/inter_bold"
-                        android:gravity="center"
-                        android:includeFontPadding="false"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:translationY="-0.5dp"
-                        android:onClick="onRiskDetailsClick"
-                        app:layout_constraintTop_toTopOf="@id/btnWhy"
-                        app:layout_constraintBottom_toBottomOf="@id/btnWhy"
-                        app:layout_constraintStart_toStartOf="@id/btnWhy"
-                        app:layout_constraintEnd_toEndOf="@id/btnWhy" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- ===== Center body ===== -->
             <ImageView
-                android:id="@+id/imgBody"
+                android:id="@+id/imgRecoveryAiTitle"
+                android:layout_width="220dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="25dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/recovery_ai_title_placeholder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/particlesAnchor"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="70dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toBottomOf="@id/imgRecoveryAiTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- high level -->
+            <FrameLayout
+                android:id="@+id/highRiskTitleWrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/body"
-                app:layout_constraintTop_toBottomOf="@id/topWidgetsRow"
-                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/recoveryGuideCard"
-                app:layout_constraintVertical_bias="0.35" />
-
-            <!-- ===== Glows ===== -->
-            <ImageView
-                android:id="@+id/glowGreen"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:src="@drawable/glow_green"
-                android:alpha="0.95"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintTop_toTopOf="@id/imgBody"
-                app:layout_constraintBottom_toBottomOf="@id/imgBody"
-                app:layout_constraintStart_toStartOf="@id/imgBody"
-                app:layout_constraintEnd_toEndOf="@id/imgBody" />
-
-            <ImageView
-                android:id="@+id/glowRed"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
-                android:src="@drawable/glow_red"
-                android:layout_marginBottom="160dp"
-                android:layout_marginStart="60dp"
-                android:scaleType="fitCenter"
-                android:alpha="0.85"
-                app:layout_constraintTop_toTopOf="@id/imgBody"
-                app:layout_constraintBottom_toBottomOf="@id/imgBody"
-                app:layout_constraintStart_toStartOf="@id/imgBody"
-                app:layout_constraintEnd_toEndOf="@id/imgBody" />
-
-            <!-- ===== Connector lines ===== -->
-            <ImageView
-                android:id="@+id/lineGreen"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:src="@drawable/line_green"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toEndOf="@id/bubbleSoreness"
-                app:layout_constraintTop_toTopOf="@id/bubbleSoreness"
-                android:layout_marginStart="-15dp"
-                android:layout_marginTop="-32dp" />
-
-            <ImageView
-                android:id="@+id/lineRed"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
-                android:src="@drawable/line_red"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toStartOf="@id/bubbleRisk"
-                app:layout_constraintTop_toTopOf="@id/bubbleRisk"
-                android:layout_marginEnd="-57dp"
-                android:layout_marginTop="-50dp" />
-
-            <TextView
-                android:id="@+id/basedOn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="* Based on\nyour last 7 days"
-                android:textColor="#EDEDED"
-                android:textSize="12sp"
-                android:fontFamily="@font/inter_bold"
-                app:layout_constraintTop_toTopOf="@id/imgBody"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="18dp" />
-
-            <!-- soreness bubble -->
-            <LinearLayout
-                android:id="@+id/bubbleSoreness"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bubble_white"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:orientation="vertical"
-                android:translationY="-40dp"
-                android:translationX="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/imgBody"
-                android:layout_marginBottom="110dp">
+                app:layout_constraintTop_toBottomOf="@id/imgRecoveryAiTitle">
 
                 <TextView
+                    android:id="@+id/highRiskGlow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Soreness:\nLegs"
-                    android:textColor="#0A0A0A"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/inter_bold" />
-            </LinearLayout>
-
-            <!-- bubble -->
-            <LinearLayout
-                android:id="@+id/bubbleRisk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bubble_white"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/imgBody"
-                android:layout_marginTop="90dp"
-                android:translationY="-70dp">
+                    android:fontFamily="@font/arial_black"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0.03"
+                    android:shadowColor="#FF5C5C"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="18"
+                    android:text="HIGH RISK"
+                    android:textAllCaps="true"
+                    android:textColor="#FF3B30"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/highRiskFront"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="High strain\nrisk: Shoulder ⚠"
-                    android:textColor="#D10000"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/inter_bold" />
-            </LinearLayout>
+                    android:fontFamily="@font/arial_black"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0.03"
+                    android:text="HIGH RISK"
+                    android:textAllCaps="true"
+                    android:textColor="#FFD0A8"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
 
-
-            <!-- Right side actions -->
-            <LinearLayout
-                android:id="@+id/rightActions"
+            <!-- low level -->
+            <FrameLayout
+                android:id="@+id/lowRiskTitleWrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginTop="12dp"
+                android:paddingStart="6dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="10dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/imgBody">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgRecoveryAiTitle">
 
-                <!-- Trends  -->
-                <FrameLayout
-                    android:layout_width="92dp"
-                    android:layout_height="32dp">
+                <TextView
+                    android:id="@+id/lowRiskGlow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_black"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:letterSpacing="0.03"
+                    android:shadowColor="#66FF33"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="18"
+                    android:text="LOW RISK"
+                    android:textAllCaps="true"
+                    android:textColor="#39FF14"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
-                    <Button
-                        android:id="@+id/btnTrends"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:background="@drawable/mini_dark_button"
-                        android:stateListAnimator="@null"
-                        android:includeFontPadding="false"
-                        android:gravity="center"
-                        app:backgroundTint="@null" />
+                <TextView
+                    android:id="@+id/lowRiskFront"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_black"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:letterSpacing="0.03"
+                    android:text="LOW RISK"
+                    android:textAllCaps="true"
+                    android:textColor="#DFFF9D"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
 
-                    <LinearLayout
-                        android:id="@+id/trendsOverlay"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:onClick="onTrendsClick"
-                        android:gravity="center"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:translationY="-0.5dp">
+            <!-- moderate level -->
+            <FrameLayout
+                android:id="@+id/moderateRiskTitleWrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgRecoveryAiTitle">
 
-                        <TextView
-                            android:id="@+id/trendsLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Trends"
-                            android:textSize="11sp"
-                            android:textColor="#8DFFB0"
-                            android:fontFamily="@font/inter_bold"
-                            android:includeFontPadding="false" />
+                <TextView
+                    android:id="@+id/moderateRiskGlow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_black"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0.02"
+                    android:shadowColor="#FFE45C"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="18"
+                    android:text="MODERATE RISK"
+                    android:textAllCaps="true"
+                    android:textColor="#FFD400"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/imgTrendsIcon"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginStart="6dp"
-                            android:src="@drawable/trends_icon_placeholder"
-                            android:contentDescription="@null"
-                            android:scaleType="fitCenter" />
-                    </LinearLayout>
+                <TextView
+                    android:id="@+id/moderateRiskFront"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arial_black"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0.02"
+                    android:text="MODERATE RISK"
+                    android:textAllCaps="true"
+                    android:textColor="#FFF1A8"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
 
-                </FrameLayout>
-
-                <Space
-                    android:layout_width="1dp"
-                    android:layout_height="12dp" />
-
-                <!-- Check-in -->
-                <FrameLayout
-                    android:layout_width="92dp"
-                    android:layout_height="32dp">
-
-                    <Button
-                        android:id="@+id/btnCheckin"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text=""
-                        android:textAllCaps="false"
-                        android:background="@drawable/mini_dark_button"
-                        android:stateListAnimator="@null"
-                        android:includeFontPadding="false"
-                        android:gravity="center"
-                        app:backgroundTint="@null" />
-
-                    <LinearLayout
-                        android:id="@+id/checkinOverlay"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:translationY="-0.5dp">
-
-                        <TextView
-                            android:id="@+id/checkinLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Check-in"
-                            android:textSize="11sp"
-                            android:textColor="#72D6FF"
-                            android:fontFamily="@font/inter_bold"
-                            android:includeFontPadding="false" />
-
-                        <ImageView
-                            android:id="@+id/imgCheckinIcon"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginStart="6dp"
-                            android:src="@drawable/checkin_icon_placeholder"
-                            android:contentDescription="@null"
-                            android:scaleType="fitCenter" />
-
-                    </LinearLayout>
-                </FrameLayout>
-
-            </LinearLayout>
-            <!-- ===== Bottom Recovery Guide bar ===== -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/recoveryGuideCard"
+            <!-- particles -->
+            <ImageView
+                android:id="@+id/imgParticlesShared"
                 android:layout_width="0dp"
-                android:layout_height="86dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/widget_card"
-                android:padding="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="280dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/particles"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/particlesAnchor" />
+
+            <!-- guy -->
+            <ImageView
+                android:id="@+id/bodyHigh"
+                android:layout_width="118dp"
+                android:layout_height="210dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/guy_high"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/imgParticlesShared"
+                app:layout_constraintEnd_toEndOf="@id/imgParticlesShared"
+                app:layout_constraintStart_toStartOf="@id/imgParticlesShared"
+                app:layout_constraintTop_toTopOf="@id/imgParticlesShared" />
+
+            <ImageView
+                android:id="@+id/bodyLow"
+                android:layout_width="118dp"
+                android:layout_height="210dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/guy_low"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@id/imgParticlesShared"
+                app:layout_constraintEnd_toEndOf="@id/imgParticlesShared"
+                app:layout_constraintStart_toStartOf="@id/imgParticlesShared"
+                app:layout_constraintTop_toTopOf="@id/imgParticlesShared" />
+
+            <ImageView
+                android:id="@+id/bodyModerate"
+                android:layout_width="118dp"
+                android:layout_height="210dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/guy_moderate"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/imgParticlesShared"
+                app:layout_constraintEnd_toEndOf="@id/imgParticlesShared"
+                app:layout_constraintStart_toStartOf="@id/imgParticlesShared"
+                app:layout_constraintTop_toTopOf="@id/imgParticlesShared" />
+
+            <!-- symbols -->
+            <ImageView
+                android:id="@+id/symbolHigh"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="75dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/plus_high"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/imgParticlesShared"
+                app:layout_constraintTop_toTopOf="@id/imgParticlesShared" />
+
+            <ImageView
+                android:id="@+id/symbolModerate"
+                android:layout_width="60dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="80dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/minus_moderate"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/imgParticlesShared"
+                app:layout_constraintTop_toTopOf="@id/imgParticlesShared" />
+
+            <!-- Gym Equipment -->
+            <ImageView
+                android:id="@+id/dumbbellHigh"
+                android:layout_width="86dp"
+                android:layout_height="86dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="14dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/dumbbell_high"
+                android:translationY="-75dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/dumbbellLow"
+                android:layout_width="86dp"
+                android:layout_height="86dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="14dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/dumbbell_low"
+                android:visibility="visible"
+                android:translationY="-75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/dumbbellModerate"
+                android:layout_width="86dp"
+                android:layout_height="86dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="14dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/dumbbell_moderate"
+                android:visibility="gone"
+                android:translationY="-75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/treadmillHigh"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="14dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/treadmill_high"
+                android:visibility="gone"
+                android:translationY="-75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/treadmillLow"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="14dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/treadmill_low"
+                android:visibility="visible"
+                android:translationY="-75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/treadmillModerate"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="14dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/treadmill_moderate"
+                android:visibility="gone"
+                android:translationY="-75dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Streaks section -->
+            <LinearLayout
+                android:id="@+id/streakSection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:id="@+id/recoveryGuide"
+                    android:id="@+id/streakLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recovery Guide"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/inter_extrabold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:gravity="center" />
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Your streak"
+                    android:textColor="#F3F3F3"
+                    android:textSize="13sp" />
 
                 <LinearLayout
-                    android:id="@+id/segmentsRow"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    app:layout_constraintTop_toBottomOf="@id/recoveryGuide"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    android:id="@+id/streakBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <!-- Hydrate -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/seg_hydrate"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                    <TextView
+                        android:id="@+id/dayM"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/streak_day_glass"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="M"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/imgHydrateIcon"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginEnd="6dp"
-                            android:src="@drawable/icon_hydrate"
-                            android:contentDescription="@null"
-                            android:scaleType="fitCenter" />
+                    <TextView
+                        android:id="@+id/dayT"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/streak_day_glass"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="T"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/hydrate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Hydrate"
-                            android:textColor="#FFFFFF"
-                            android:textStyle="bold"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/inter_bold"
-                            android:includeFontPadding="false" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/dayW"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/streak_day_glass"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="W"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                    <!-- Stretch -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/seg_stretch"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                    <TextView
+                        android:id="@+id/dayTH"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/streak_day_glass"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="TH"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
 
-                        <ImageView
-                            android:id="@+id/imgStretchIcon"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginEnd="6dp"
-                            android:src="@drawable/icon_stretch"
-                            android:contentDescription="@null"
-                            android:scaleType="fitCenter" />
+                    <TextView
+                        android:id="@+id/dayF"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/streak_day_glass"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="F"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/stretch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Stretch"
-                            android:textColor="#FFFFFF"
-                            android:textStyle="bold"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/inter_bold"
-                            android:includeFontPadding="false" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/dayS"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/streak_day_glass"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="S"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                    <!-- Rest -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/seg_rest"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/imgRestIcon"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginEnd="6dp"
-                            android:src="@drawable/icon_rest"
-                            android:contentDescription="@null"
-                            android:scaleType="fitCenter" />
-
-                        <TextView
-                            android:id="@+id/rest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rest"
-                            android:textColor="#FFFFFF"
-                            android:textStyle="bold"
-                            android:textSize="11sp"
-                            android:fontFamily="@font/inter_bold"
-                            android:includeFontPadding="false" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/daySUN"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:background="@drawable/streak_day_active"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="Sun"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
-    <!-- Bottom nav -->
     <LinearLayout
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
@@ -717,90 +516,95 @@
         android:layout_marginBottom="16dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:clipToPadding="false"
-        android:clipChildren="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Profile -->
-        <FrameLayout
-            android:layout_width="58dp"
-            android:layout_height="58dp"
-            android:background="@drawable/nav_circle_bg"
-            android:padding="8dp"
-            android:clipToPadding="false"
-            android:clipChildren="false">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/nav_calendar"
-                android:scaleType="centerCrop"
-                android:onClick="onProfileClick"
-                android:adjustViewBounds="true"/>
-        </FrameLayout>
-
-        <Space android:layout_width="14dp" android:layout_height="1dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <FrameLayout
             android:layout_width="58dp"
             android:layout_height="58dp"
             android:background="@drawable/nav_circle_bg"
             android:padding="10dp">
+
             <ImageView
+                android:id="@+id/navCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/nav_clipboard_active"
-                android:onClick="onLogClick"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:src="@drawable/nav_calendar" />
         </FrameLayout>
 
-        <Space android:layout_width="14dp" android:layout_height="1dp"/>
+        <Space
+            android:layout_width="14dp"
+            android:layout_height="1dp" />
 
-        <!-- Home  -->
         <FrameLayout
-            android:layout_width="62dp"
-            android:layout_height="62dp"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/navClipboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/nav_clipboard_active" />
+        </FrameLayout>
+
+        <Space
+            android:layout_width="14dp"
+            android:layout_height="1dp" />
+
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/nav_circle_active_red"
-            android:padding="12dp">
+            android:padding="10dp">
+
             <ImageView
+                android:id="@+id/navHome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/nav_home"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:src="@drawable/nav_home" />
         </FrameLayout>
 
-        <Space android:layout_width="14dp" android:layout_height="1dp"/>
+        <Space
+            android:layout_width="14dp"
+            android:layout_height="1dp" />
 
         <FrameLayout
             android:layout_width="58dp"
             android:layout_height="58dp"
             android:background="@drawable/nav_circle_bg"
             android:padding="10dp">
+
             <ImageView
+                android:id="@+id/navArm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/nav_arm"
-                android:onClick="onRecoveryClick"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:src="@drawable/nav_arm" />
         </FrameLayout>
 
-        <Space android:layout_width="14dp" android:layout_height="1dp"/>
+        <Space
+            android:layout_width="14dp"
+            android:layout_height="1dp" />
 
         <FrameLayout
             android:layout_width="58dp"
             android:layout_height="58dp"
             android:background="@drawable/nav_circle_bg"
             android:padding="10dp">
+
             <ImageView
+                android:id="@+id/navHex"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:onClick="onSettingsClick"
-                android:src="@drawable/nav_hex"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:src="@drawable/nav_hex" />
         </FrameLayout>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
