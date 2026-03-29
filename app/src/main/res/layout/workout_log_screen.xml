@@ -27,7 +27,6 @@
         android:padding="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_margin="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -415,6 +414,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_calendar"
+                android:onClick="onHistoryClick"
                 android:scaleType="centerCrop" />
         </FrameLayout>
 
@@ -443,6 +443,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_home"
+                android:onClick="onDashboardClick"
                 android:scaleType="fitCenter" />
         </FrameLayout>
 
@@ -457,6 +458,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_arm"
+                android:onClick="onRecoveryClick"
                 android:scaleType="fitCenter" />
         </FrameLayout>
 
@@ -471,6 +473,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_hex"
+                android:onClick="onSettingsClick"
                 android:scaleType="fitCenter" />
         </FrameLayout>
 

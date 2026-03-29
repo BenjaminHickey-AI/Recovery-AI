@@ -13,11 +13,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -160,6 +162,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void loadHistoryFragment(){
+        setContentView(R.layout.workout_log_history);
+    }
+
     private void loadRiskDetailsFragment() {
         setContentView(R.layout.risk_details);
     }
@@ -200,6 +206,10 @@ public class MainActivity extends AppCompatActivity {
         loadTrendsFragment();
     }
 
+    public void onHistoryClick(View view) {
+        loadHistoryFragment();
+    }
+
     private void loadDataFromFirestore() {
         //load biometric data
         db.collection("users")
@@ -234,13 +244,42 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> Log.e("Firestore", "Error loading user doc", e));
+
+        //load workouts
+        db.collection("users")
+                .document(userId)
+                .collection("workouts")
+                .orderBy("date", Query.Direction.ASCENDING)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                        String name = doc.getString("name");
+                        String description = doc.getString("description");
+                        String date = doc.getString("date");
+
+                        Long intensityLong = doc.getLong("intensity");
+                        Long durationLong = doc.getLong("duration");
+
+                        int intensity = intensityLong != null ? intensityLong.intValue() : 0;
+                        int duration = durationLong != null ? durationLong.intValue() : 0;
+
+                        String docID = doc.getId();
+
+                        workouts.add(new Workout(name, description, date, duration, intensity, docID));
+                    }
+
+                    Log.d("Firestore", "Workouts loaded: " + workouts.size());
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error loading workouts", e);
+                });
     }
 
     private void saveWorkoutToFirestore(Workout workout)
     {
         db = FirebaseFirestore.getInstance();
 
-        //
+        //collect data to save into map
         Map<String, Object> workoutMap = new HashMap<>();
         workoutMap.put("name", workout.getName());
         workoutMap.put("description", workout.getDescription());
