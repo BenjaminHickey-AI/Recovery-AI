@@ -45,10 +45,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 int duration = Integer.parseInt(etDuration.getText().toString());
                 int intensity = Integer.parseInt(etIntensity.getText().toString());
-                int heartRate = Integer.parseInt(etHeartRate.getText().toString());
 
                 // Calling the model
-                String risk = logWorkout.predictInjuryRisk(intensity, duration, heartRate);
+                String risk = logWorkout.predictInjuryRisk(intensity, duration);
                 tvResult.setText("Injury Risk: " + risk);
                 if (risk == "Medium" || risk == "High") {
                     RecoverySuggestions.getRecoveryAdvice(

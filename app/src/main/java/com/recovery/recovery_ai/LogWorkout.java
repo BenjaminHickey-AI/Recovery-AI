@@ -21,7 +21,6 @@ public class LogWorkout {
         float[][] input = new float[1][4];
         input[0][0] = intensity;
         input[0][1] = duration;
-        input[0][2] = heartRate;
         input[0][3] = load;
 
         // Running the model

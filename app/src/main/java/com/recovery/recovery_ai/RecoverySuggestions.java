@@ -8,8 +8,8 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.OkHttpClient;
+
 public class RecoverySuggestions {
-    private static final String API_KEY = "Place Holder For Now";
     private static final String URL = "https://api.openai.com/v1/chat/completions";
 
     public interface SuggestionCallBack {
@@ -31,7 +31,7 @@ public class RecoverySuggestions {
                 messages.put(message);
 
                 JSONObject jsonBody = new JSONObject();
-                jsonBody.put("model", "gpt-4.1-mini");
+                jsonBody.put("model", "gpt-4o-mini");
                 jsonBody.put("messages", messages);
 
                 RequestBody requestBody = RequestBody.create(
@@ -41,7 +41,7 @@ public class RecoverySuggestions {
 
                 Request request = new Request.Builder()
                         .url(URL)
-                        .addHeader("Authorization", "Bearer " + API_KEY)
+                        .addHeader("Authorization", "Bearer " + BuildConfig.API_KEY)
                         .post(requestBody)
                         .build();
 
