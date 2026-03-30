@@ -153,6 +153,7 @@
                             android:fontFamily="@font/inter_bold"/>
 
                         <TextView
+                            android:id="@+id/age"
                             android:layout_width="64dp"
                             android:layout_height="42dp"
                             android:layout_marginTop="4dp"
@@ -184,6 +185,7 @@
                             android:fontFamily="@font/inter_bold"/>
 
                         <TextView
+                            android:id="@+id/weight"
                             android:layout_width="64dp"
                             android:layout_height="42dp"
                             android:layout_marginTop="4dp"
@@ -214,6 +216,7 @@
                             android:fontFamily="@font/inter_bold"/>
 
                         <TextView
+                            android:id="@+id/height"
                             android:layout_width="64dp"
                             android:layout_height="42dp"
                             android:layout_marginTop="4dp"
@@ -351,6 +354,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_clipboard_active"
+                android:onClick="onLogClick"
                 android:scaleType="fitCenter"/>
         </FrameLayout>
 
@@ -365,6 +369,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_home"
+                android:onClick="onDashboardClick"
                 android:scaleType="fitCenter"/>
         </FrameLayout>
 
@@ -379,6 +384,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_arm"
+                android:onClick="onRecoveryClick"
                 android:scaleType="fitCenter"/>
         </FrameLayout>
 
@@ -392,6 +398,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onSettingsClick"
                 android:src="@drawable/nav_hex"
                 android:scaleType="fitCenter"/>
         </FrameLayout>

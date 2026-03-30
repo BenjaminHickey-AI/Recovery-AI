@@ -1,8 +1,14 @@
 package com.recovery.recovery_ai;
 
+import Logic.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.tensorflow.lite.Interpreter;
@@ -10,9 +16,32 @@ import org.tensorflow.lite.support.common.FileUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+
 public class MainActivity extends AppCompatActivity {
     // Our injury model
     Interpreter tflite;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+
+
+
+    //user input variables
+    int intensity = 0;
+    private Vector<Workout> workouts = new Vector<Workout>();
+    private int user_age = 0, user_weight = 0;
+    private String user_height = "", user_first, user_last, userId;
+    private Bitmap user_image;
 
     // Our UI elements
     EditText etDuration;
@@ -72,6 +101,268 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }*/
+
+        user_image = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_circle_bg);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        userId = user.getUid();
+
+        loadDataFromFirestore();
+        loadDashboardFragment();
     }
 
+
+
+    private void loadProfileFragment(){
+        setContentView(R.layout.profile_screen);
+
+        TextView weight, height, age, name;
+
+        name = findViewById(R.id.name);
+        weight = findViewById(R.id.weight);
+        height = findViewById(R.id.height);
+        age = findViewById(R.id.age);
+
+        name.setText(user_first + " " + user_last);
+        weight.setText(Integer.toString(user_weight));
+        age.setText(Integer.toString(user_age));
+        height.setText(user_height);
+    }
+
+    private void loadDashboardFragment(){
+        setContentView(R.layout.dashboard);
+    }
+
+    private void loadRecoveryFragment(){
+        setContentView(R.layout.recovery_recommendations);
+    }
+
+    private void loadLogWorkoutFragment(){
+        setContentView(R.layout.workout_log_screen);
+
+        //UI variables
+        Button saveBtn;
+        TextView intensityDescription;
+        ImageView lightBtn, mildBtn,averageBtn, hardBtn, veryHardBtn, maxBtn;
+        EditText nameText, descText, durationText;
+
+        //text inputs
+        nameText = findViewById(R.id.etExerciseName);
+        descText = findViewById(R.id.etDescription);
+        durationText = findViewById(R.id.etDurationValue);
+
+        intensityDescription = findViewById(R.id.intensityDescription);
+        intensityDescription.setText("Select an intensity");
+
+        //buttons
+        saveBtn = findViewById(R.id.btnSaveIntensity);
+        lightBtn = findViewById(R.id.intensityLight);
+        mildBtn = findViewById(R.id.intensityMild);
+        averageBtn = findViewById(R.id.intensityAverage);
+        hardBtn = findViewById(R.id.intensityHard);
+        veryHardBtn = findViewById(R.id.intensityVeryHard);
+        maxBtn = findViewById(R.id.intensityMax);
+
+        lightBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 1;
+                intensityDescription.setText("Light Activity - You can maintain this activity for hours, easy to breathe and carry a conversation.");
+            }
+        });
+        mildBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 3;
+                intensityDescription.setText("Mild Activity - Occasionally Breathing hard, can hold a short conversation.");
+            }
+        });
+        averageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 5;
+                intensityDescription.setText("Average Activity - Breathing heavily, can hold a short conversation. Still somewhat comfortable, but becoming noticeably more challenging.");
+            }
+        });
+        hardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 6;
+                intensityDescription.setText("Hard Activity - Borderline uncomfortable. Short of breath, can speak a sentence.");
+            }
+        });
+        veryHardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 8;
+                intensityDescription.setText("Very Hard Activity - Very difficult to maintain exercise intensity. Can barely breathe and speak only a few words.");
+            }
+        });
+        maxBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intensity = 10;
+                intensityDescription.setText("Maximum Activity - Feels almost impossible to keep going. Completely out of breath, unable to talk. Cannot maintain for more than a very short time.");
+            }
+        });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (saveBtn != null) saveBtn.setEnabled(false);
+                workouts.add(new Workout(nameText.getText().toString(), descText.getText().toString(), Integer.parseInt(durationText.getText().toString()), intensity));
+                nameText.setText("");
+                descText.setText("");
+                durationText.setText("0");
+                intensityDescription.setText("Select an intensity");
+                saveWorkoutToFirestore(workouts.get(workouts.size()-1));
+            }
+        });
+    }
+
+    private void loadHistoryFragment(){
+        setContentView(R.layout.workout_log_history);
+
+    }
+
+    private void loadSettingsFragment() {
+        setContentView(R.layout.settings);
+    }
+
+    public void onRecoveryClick(View view) {
+        loadRecoveryFragment();
+    }
+
+    public void onDashboardClick(View view) {
+        loadDashboardFragment();
+    }
+
+    public void onLogClick(View view) {
+        loadLogWorkoutFragment();
+    }
+
+    public void onSettingsClick(View view) {
+        loadSettingsFragment();
+    }
+
+    public void onHistoryClick(View view) {
+        loadHistoryFragment();
+    }
+
+    private void loadDataFromFirestore() {
+        //load biometric data
+        db.collection("users")
+                .document(userId)
+                .collection("biometrics")
+                .document("latest")
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        Long ageL = doc.getLong("age");
+                        Long weightL = doc.getLong("weight");
+
+                        user_age = (ageL != null) ? ageL.intValue() : 0;
+                        user_weight = (weightL != null) ? weightL.intValue() : 0;
+                        user_height = doc.getString("height") != null ? doc.getString("height") : "";
+                    } else {
+                        Log.d("Firestore", "No biometrics/latest found");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Error loading biometrics/latest", e));
+
+        // Load name from users
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        user_first = doc.getString("first_name") != null ? doc.getString("first_name") : "";
+                        user_last = doc.getString("last_name") != null ? doc.getString("last_name") : "";
+                    } else {
+                        Log.d("Firestore", "No user doc found");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Error loading user doc", e));
+
+        //load workouts
+        db.collection("users")
+                .document(userId)
+                .collection("workouts")
+                .orderBy("date", Query.Direction.ASCENDING)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                        String name = doc.getString("name");
+                        String description = doc.getString("description");
+                        String date = doc.getString("date");
+
+                        Long intensityLong = doc.getLong("intensity");
+                        Long durationLong = doc.getLong("duration");
+
+                        int intensity = intensityLong != null ? intensityLong.intValue() : 0;
+                        int duration = durationLong != null ? durationLong.intValue() : 0;
+
+                        String docID = doc.getId();
+
+                        workouts.add(new Workout(name, description, date, duration, intensity, docID));
+                    }
+
+                    Log.d("Firestore", "Workouts loaded: " + workouts.size());
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error loading workouts", e);
+                });
+    }
+
+    private void saveWorkoutToFirestore(Workout workout)
+    {
+        db = FirebaseFirestore.getInstance();
+
+        //collect data to save into map
+        Map<String, Object> workoutMap = new HashMap<>();
+        workoutMap.put("name", workout.getName());
+        workoutMap.put("description", workout.getDescription());
+        workoutMap.put("date", workout.getDate());
+        workoutMap.put("intensity", workout.getIntensity());
+        workoutMap.put("duration", workout.getDuration());
+
+
+        if(!workout.getDocID().isEmpty())
+        {
+            db.collection("users").document(userId).collection("workouts").get().addOnSuccessListener(querySnapshot ->
+            {
+                for (DocumentSnapshot document : querySnapshot.getDocuments())
+                {
+                    if (document.getId().equals(workout.getDocID()))
+                    {
+                        db.collection("users").document(userId).collection("workouts").document(workout.getDocID()).set(workoutMap);
+                    }
+                }
+            }).addOnFailureListener(e -> Log.w("Firestore", "Error getting documents", e));
+        }
+        else
+        {
+            db.collection("users").document(userId).collection("workouts").add(workoutMap).addOnSuccessListener(documentReference ->
+            {
+                for(int i = 0; i < workouts.size(); i++)
+                {
+                    if(workouts.get(i).equals(workout))
+                        workouts.get(i).setDocID(documentReference.getId());
+                }
+                Log.d("Firestore", "Workout saved with ID: " + documentReference.getId());
+            }).addOnFailureListener(e ->
+            {
+                Log.e("Firestore", "Error saving goal", e);
+            });
+        }
+    }
+
+    private void deleteWorkoutFromFirestore(Workout workout)
+    {
+        db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("users").document(userId).collection("workouts").document(workout.getDocID());
+        docRef.delete().addOnSuccessListener(aVoid -> Log.d("Firestore", "Document successfully deleted")).addOnFailureListener(e -> Log.w("Firestore", "Error deleting document", e));
+    }
 }

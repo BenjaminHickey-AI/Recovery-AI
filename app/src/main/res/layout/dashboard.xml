@@ -83,7 +83,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/cardHighRisk"
                     app:cardBackgroundColor="@android:color/transparent"
-                    app:backgroundTint="@null"
+                    app:backgrounTint="@null"
                     app:layout_constraintWidth_percent="0.52">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,7 +91,7 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/widget_card"
                         app:cardBackgroundColor="@android:color/transparent"
-                        app:backgroundTint="@null"
+                        app:backgrounTint="@null"
                         android:padding="8dp">
 
                         <!-- Title -->

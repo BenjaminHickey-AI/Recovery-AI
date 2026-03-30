@@ -94,13 +94,14 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isMale || isFemale)
-                    GoSignupTwo();
+                    GoSignupFour();
                 else
                     Toast.makeText(SignUpActivity.this, "Please select a Gender", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    /*
     //Sign up page 2
     private void GoSignupTwo() {
         setContentView(R.layout.activity_signup_two);
@@ -182,7 +183,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-
+*/
     //sign up page 4
     private void GoSignupFour() {
         setContentView(R.layout.activity_signup_four);
@@ -201,7 +202,7 @@ public class SignUpActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoSignupThree();
+                GoSignupOne();
             }
         });
 
