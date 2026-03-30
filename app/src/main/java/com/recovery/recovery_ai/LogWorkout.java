@@ -13,7 +13,7 @@ public class LogWorkout {
     }
 
     // Sending the data to the model
-    public String predictInjuryRisk(float intensity, float duration, float heartRate) {
+    public String predictInjuryRisk(float intensity, float duration) {
         // Calculating the training load
         float load = calculateTrainingLoad(intensity, duration);
 

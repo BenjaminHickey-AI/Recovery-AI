@@ -16,7 +16,6 @@ import org.tensorflow.lite.support.common.FileUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,9 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
 
-
-
-    //user input variables
+    // user input variables
     int intensity = 0;
     private Vector<Workout> workouts = new Vector<Workout>();
     private int user_age = 0, user_weight = 0;
@@ -46,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
     // Our UI elements
     EditText etDuration;
     EditText etIntensity;
-    EditText etHeartRate;
     Button btnPredict;
     TextView tvResult;
 
     // Workout processor
     LogWorkout logWorkout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         logWorkout = new LogWorkout(tflite);
 
         // TODO Until we understand what is happening with the inputs this logic will not be in use.
-        /*buttonPredict.setOnClickListener(v -> {
+        btnPredict.setOnClickListener(v -> {
             try {
                 int duration = Integer.parseInt(etDuration.getText().toString());
                 int intensity = Integer.parseInt(etIntensity.getText().toString());
@@ -78,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 // Calling the model
                 String risk = logWorkout.predictInjuryRisk(intensity, duration);
                 tvResult.setText("Injury Risk: " + risk);
+
                 if (risk == "Medium" || risk == "High") {
                     RecoverySuggestions.getRecoveryAdvice(
                             risk,
@@ -100,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            }*/
+            }
+        });
 
         user_image = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_circle_bg);
         auth = FirebaseAuth.getInstance();
@@ -113,9 +112,7 @@ public class MainActivity extends AppCompatActivity {
         loadDashboardFragment();
     }
 
-
-
-    private void loadProfileFragment(){
+    private void loadProfileFragment() {
         setContentView(R.layout.profile_screen);
 
         TextView weight, height, age, name;
@@ -131,24 +128,24 @@ public class MainActivity extends AppCompatActivity {
         height.setText(user_height);
     }
 
-    private void loadDashboardFragment(){
+    private void loadDashboardFragment() {
         setContentView(R.layout.dashboard);
     }
 
-    private void loadRecoveryFragment(){
+    private void loadRecoveryFragment() {
         setContentView(R.layout.recovery_recommendations);
     }
 
-    private void loadLogWorkoutFragment(){
+    private void loadLogWorkoutFragment() {
         setContentView(R.layout.workout_log_screen);
 
-        //UI variables
+        // UI variables
         Button saveBtn;
         TextView intensityDescription;
-        ImageView lightBtn, mildBtn,averageBtn, hardBtn, veryHardBtn, maxBtn;
+        ImageView lightBtn, mildBtn, averageBtn, hardBtn, veryHardBtn, maxBtn;
         EditText nameText, descText, durationText;
 
-        //text inputs
+        // text inputs
         nameText = findViewById(R.id.etExerciseName);
         descText = findViewById(R.id.etDescription);
         durationText = findViewById(R.id.etDurationValue);
@@ -156,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         intensityDescription = findViewById(R.id.intensityDescription);
         intensityDescription.setText("Select an intensity");
 
-        //buttons
+        // buttons
         saveBtn = findViewById(R.id.btnSaveIntensity);
         lightBtn = findViewById(R.id.intensityLight);
         mildBtn = findViewById(R.id.intensityMild);
@@ -172,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 intensityDescription.setText("Light Activity - You can maintain this activity for hours, easy to breathe and carry a conversation.");
             }
         });
+
         mildBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 intensityDescription.setText("Mild Activity - Occasionally Breathing hard, can hold a short conversation.");
             }
         });
+
         averageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 intensityDescription.setText("Average Activity - Breathing heavily, can hold a short conversation. Still somewhat comfortable, but becoming noticeably more challenging.");
             }
         });
+
         hardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 intensityDescription.setText("Hard Activity - Borderline uncomfortable. Short of breath, can speak a sentence.");
             }
         });
+
         veryHardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 intensityDescription.setText("Very Hard Activity - Very difficult to maintain exercise intensity. Can barely breathe and speak only a few words.");
             }
         });
+
         maxBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,14 +219,13 @@ public class MainActivity extends AppCompatActivity {
                 descText.setText("");
                 durationText.setText("0");
                 intensityDescription.setText("Select an intensity");
-                saveWorkoutToFirestore(workouts.get(workouts.size()-1));
+                saveWorkoutToFirestore(workouts.get(workouts.size() - 1));
             }
         });
     }
 
-    private void loadHistoryFragment(){
+    private void loadHistoryFragment() {
         setContentView(R.layout.workout_log_history);
-
     }
 
     private void loadSettingsFragment() {
@@ -252,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDataFromFirestore() {
-        //load biometric data
+        // load biometric data
         db.collection("users")
                 .document(userId)
                 .collection("biometrics")
@@ -286,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Log.e("Firestore", "Error loading user doc", e));
 
-        //load workouts
+        // load workouts
         db.collection("users")
                 .document(userId)
                 .collection("workouts")
@@ -316,11 +317,9 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveWorkoutToFirestore(Workout workout)
-    {
+    private void saveWorkoutToFirestore(Workout workout) {
         db = FirebaseFirestore.getInstance();
 
-        //collect data to save into map
         Map<String, Object> workoutMap = new HashMap<>();
         workoutMap.put("name", workout.getName());
         workoutMap.put("description", workout.getDescription());
@@ -328,39 +327,28 @@ public class MainActivity extends AppCompatActivity {
         workoutMap.put("intensity", workout.getIntensity());
         workoutMap.put("duration", workout.getDuration());
 
-
-        if(!workout.getDocID().isEmpty())
-        {
-            db.collection("users").document(userId).collection("workouts").get().addOnSuccessListener(querySnapshot ->
-            {
-                for (DocumentSnapshot document : querySnapshot.getDocuments())
-                {
-                    if (document.getId().equals(workout.getDocID()))
-                    {
+        if (!workout.getDocID().isEmpty()) {
+            db.collection("users").document(userId).collection("workouts").get().addOnSuccessListener(querySnapshot -> {
+                for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                    if (document.getId().equals(workout.getDocID())) {
                         db.collection("users").document(userId).collection("workouts").document(workout.getDocID()).set(workoutMap);
                     }
                 }
             }).addOnFailureListener(e -> Log.w("Firestore", "Error getting documents", e));
-        }
-        else
-        {
-            db.collection("users").document(userId).collection("workouts").add(workoutMap).addOnSuccessListener(documentReference ->
-            {
-                for(int i = 0; i < workouts.size(); i++)
-                {
-                    if(workouts.get(i).equals(workout))
+        } else {
+            db.collection("users").document(userId).collection("workouts").add(workoutMap).addOnSuccessListener(documentReference -> {
+                for (int i = 0; i < workouts.size(); i++) {
+                    if (workouts.get(i).equals(workout))
                         workouts.get(i).setDocID(documentReference.getId());
                 }
                 Log.d("Firestore", "Workout saved with ID: " + documentReference.getId());
-            }).addOnFailureListener(e ->
-            {
+            }).addOnFailureListener(e -> {
                 Log.e("Firestore", "Error saving goal", e);
             });
         }
     }
 
-    private void deleteWorkoutFromFirestore(Workout workout)
-    {
+    private void deleteWorkoutFromFirestore(Workout workout) {
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(userId).collection("workouts").document(workout.getDocID());
         docRef.delete().addOnSuccessListener(aVoid -> Log.d("Firestore", "Document successfully deleted")).addOnFailureListener(e -> Log.w("Firestore", "Error deleting document", e));
