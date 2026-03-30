@@ -300,6 +300,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onDashboardClick"
                     android:orientation="vertical">
 
                     <!-- Video row 1 -->
@@ -508,6 +509,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onHistoryClick"
                 android:src="@drawable/nav_calendar"
                 android:scaleType="centerCrop" />
         </FrameLayout>
@@ -523,6 +525,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onLogClick"
                 android:src="@drawable/nav_clipboard_active"
                 android:scaleType="fitCenter" />
         </FrameLayout>
@@ -538,6 +541,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onDashboardClick"
                 android:src="@drawable/nav_home"
                 android:scaleType="fitCenter" />
         </FrameLayout>
@@ -568,6 +572,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:onClick="onSettingsClick"
                 android:src="@drawable/nav_hex"
                 android:scaleType="fitCenter" />
         </FrameLayout>
