@@ -62,4 +62,9 @@
         <item>Ankle</item>
     </string-array>
 
+    <string-array name="am_pm_options">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+
 </resources>
