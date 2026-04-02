@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Background -->
     <ImageView
         android:id="@+id/bg"
         android:layout_width="0dp"
@@ -16,7 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Top logo -->
     <FrameLayout
         android:id="@+id/logoCircle"
         android:layout_width="62dp"
@@ -36,7 +34,6 @@
             android:src="@drawable/ic_launcher_logo" />
     </FrameLayout>
 
-    <!-- Smaller glass card -->
     <FrameLayout
         android:id="@+id/glassCardAccount"
         android:layout_width="0dp"
@@ -55,7 +52,6 @@
             android:layout_height="match_parent"
             android:padding="22dp">
 
-            <!-- Header -->
             <TextView
                 android:id="@+id/accountHeader"
                 android:layout_width="wrap_content"
@@ -74,8 +70,8 @@
                 android:layout_width="0dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="42dp"
-                android:background="@drawable/time_box_dark"
-                android:hint="Change Email"
+                android:background="@drawable/acct_block"
+                android:hint="marco@email.com"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#9C9C9C"
                 android:textSize="16sp"
@@ -93,7 +89,7 @@
                 android:layout_width="0dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/time_box_dark"
+                android:background="@drawable/acct_block"
                 android:hint="Confirm Email"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#9C9C9C"
@@ -112,7 +108,7 @@
                 android:layout_width="0dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/time_box_dark"
+                android:background="@drawable/acct_block"
                 android:hint="Change Password"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#9C9C9C"
@@ -131,7 +127,7 @@
                 android:layout_width="0dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="14dp"
-                android:background="@drawable/time_box_dark"
+                android:background="@drawable/acct_block"
                 android:hint="Confirm Password"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#9C9C9C"
@@ -155,31 +151,19 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
-                    android:id="@+id/imgSaveAccountButton"
+                    android:id="@+id/SaveAccountButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/save_button_placeholder"
+                    android:src="@drawable/save_button"
                     android:scaleType="fitCenter"
                     android:contentDescription="@null" />
-
-                <TextView
-                    android:id="@+id/tvSaveAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="SAVE"
-                    android:textColor="#000000"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/inter_extrabold"
-                    android:gravity="center" />
 
             </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
-    <!-- Back button under card -->
+
     <FrameLayout
         android:id="@+id/backButtonWrap"
         android:layout_width="94dp"
@@ -190,24 +174,12 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:id="@+id/imgBackButton"
+            android:id="@+id/BackButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/save_button_placeholder"
+            android:src="@drawable/btn_back"
             android:scaleType="fitCenter"
             android:contentDescription="@null" />
-
-        <TextView
-            android:id="@+id/tvBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Back"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold|italic"
-            android:fontFamily="@font/inter_extrabold"
-            android:gravity="center" />
 
     </FrameLayout>
 
