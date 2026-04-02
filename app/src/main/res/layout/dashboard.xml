@@ -380,6 +380,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+
+
             <!-- Streaks section -->
             <LinearLayout
                 android:id="@+id/streakSection"
@@ -391,6 +393,25 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/tvDashboardSuggestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="18dp"
+                    android:background="@drawable/bg_glass"
+                    android:padding="14dp"
+                    android:text="Recovery insights will appear here..."
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="5dp"
+                    android:fontFamily="@font/inter_regular"
+                    app:layout_constraintBottom_toTopOf="@id/streakSection"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <TextView
                     android:id="@+id/streakLabel"

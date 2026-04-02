@@ -174,6 +174,41 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         populateWorkoutStreak();
+
+        TextView tvDashboardSuggestions = findViewById(R.id.tvDashboardSuggestions);
+        if (injuryRisk.equalsIgnoreCase("medium") || injuryRisk.equalsIgnoreCase("high")) {
+            tvDashboardSuggestions.setText("Generating AI recovery suggestions...");
+
+            RecoverySuggestions.getRecoveryAdvice(
+                    injuryRisk,
+                    new RecoverySuggestions.SuggestionCallBack() {
+                        @Override
+                        public void onSuggestionRecieved(String suggestions) {
+                            runOnUiThread(() -> {
+                                tvDashboardSuggestions.setText(suggestions);
+                            });
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(
+                                            "AI coach temporarily unavailable.\n" +
+                                                    "Hydrate well\n" +
+                                                    "Prioritize sleep\n" +
+                                                    "Reduce tomorrow intensity"
+                                    )
+                            );
+                        }
+                    }
+            );
+        } else {
+            tvDashboardSuggestions.setText(
+                    "• Great recovery trend\n" +
+                            "• Maintain current pace\n" +
+                            "• Stay hydrated"
+            );
+        }
     }
 
     private float calculateBMI(int weightlbs, String heightString) {
@@ -190,7 +225,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadRecoveryFragment(){
-        setContentView(R.layout.recovery_recommendations);
     }
 
     private void loadLogWorkoutFragment(){
@@ -268,18 +302,28 @@ public class MainActivity extends AppCompatActivity {
                         new RecoverySuggestions.SuggestionCallBack() {
                             @Override
                             public void onSuggestionRecieved(String suggestions) {
-                                tvResult.append("\n\nRecovery Suggestions:\n" + suggestions);
-                            }
-                            @Override
-                            public void onError(String error) {
-                                tvResult.append("\n\nError getting suggestions please try again");
+                                runOnUiThread(() -> {
+                                    android.widget.Toast.makeText(
+                                            MainActivity.this,
+                                            "Recovery Tips:\n" + suggestions,
+                                            android.widget.Toast.LENGTH_LONG
+                                    ).show();
+                                });
                             }
 
+                            @Override
+                            public void onError(String error) {
+                                runOnUiThread(() -> {
+                                    android.widget.Toast.makeText(
+                                            MainActivity.this,
+                                            "Error getting suggestions",
+                                            android.widget.Toast.LENGTH_SHORT
+                                    ).show();
+                                });
+                            }
                         }
                 );
             }
-
-
 
             nameText.setText("");
             descText.setText("");
