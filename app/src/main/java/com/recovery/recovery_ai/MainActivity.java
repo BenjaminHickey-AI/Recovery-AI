@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
     // user input variables
-    String injuryRisk = "high"; // temp var for dashboard functionality: low, med, high
+    String injuryRisk = "high";// temp var for dashboard functionality: low, med, high
     // user input variables
     int intensity = 0;
     private Vector<Workout> workouts = new Vector<>();
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     injuryRisk,
                     new RecoverySuggestions.SuggestionCallBack() {
                         @Override
-                        public void onSuggestionRecieved(String suggestions) {
+                        public void onSuggestionReceived(String suggestions) {
                             runOnUiThread(() -> {
                                 tvDashboardSuggestions.setText(suggestions);
                             });
@@ -193,20 +193,39 @@ public class MainActivity extends AppCompatActivity {
                         public void onError(String error) {
                             runOnUiThread(() ->
                                     tvDashboardSuggestions.setText(
-                                            "AI coach temporarily unavailable.\n" +
+                                            "RecoveryAI Coach is resting.\n" +
                                                     "Hydrate well\n" +
                                                     "Prioritize sleep\n" +
-                                                    "Reduce tomorrow intensity"
+                                                    "Reduce workout intensity"
                                     )
                             );
                         }
                     }
             );
         } else {
-            tvDashboardSuggestions.setText(
-                    "• Great recovery trend\n" +
-                            "• Maintain current pace\n" +
-                            "• Stay hydrated"
+            tvDashboardSuggestions.setText("Generating recovery plan...");
+
+            RecoverySuggestions.getRecoveryAdvice(
+                    injuryRisk,
+                    new RecoverySuggestions.SuggestionCallBack() {
+
+                        @Override
+                        public void onSuggestionReceived(String suggestions) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(suggestions)
+                            );
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(
+                                            "Stay consistent with training\n" +
+                                                    "Keep hydration steady\n" +
+                                                    "Listen to your body"
+                                    ));
+                        }
+                    }
             );
         }
     }
@@ -296,12 +315,12 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d("Model", "Prediction: " + risk);
 
-            if(risk.equals("Medium") || risk.equals("High")){
+            if(risk.equals("medium") || risk.equals("high")){
                 RecoverySuggestions.getRecoveryAdvice(
                         risk,
                         new RecoverySuggestions.SuggestionCallBack() {
                             @Override
-                            public void onSuggestionRecieved(String suggestions) {
+                            public void onSuggestionReceived(String suggestions) {
                                 runOnUiThread(() -> {
                                     android.widget.Toast.makeText(
                                             MainActivity.this,
