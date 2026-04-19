@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite.support.common.FileUtil;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,16 +39,26 @@ import java.util.Map;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
+    // Our injury model
+    Interpreter tflite;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
 
     // user input variables
-    String injuryRisk = "high"; // temp var for dashboard functionality: low, med, high
+    String injuryRisk = "high";// temp var for dashboard functionality: low, med, high
+    // user input variables
     int intensity = 0;
     private Vector<Workout> workouts = new Vector<>();
     private int user_age = 0, user_weight = 0;
     private String user_height = "", user_first, user_last, userId;
     private Bitmap user_image;
+
+    // Our UI elements
+
+    TextView tvResult;
+
+    // Workout processor
+    LogWorkout logWorkout;
 
     // history / edit helpers
     private Workout selectedWorkout = null;
@@ -53,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Load our model
+        try {
+            tflite = new Interpreter(FileUtil.loadMappedFile(this, "risk_model.tflite"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Initializing our LogWorkout class
+        logWorkout = new LogWorkout(tflite);
+
 
         user_image = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_circle_bg);
         auth = FirebaseAuth.getInstance();
@@ -132,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 treadmillLow.setVisibility(View.VISIBLE);
 
                 break;
-            case "med":
+            case "medium":
                 moderateTitle.setVisibility(View.VISIBLE);
                 bodyModerate.setVisibility(View.VISIBLE);
                 symbolModerate.setVisibility(View.VISIBLE);
@@ -149,13 +174,79 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         populateWorkoutStreak();
+
+        TextView tvDashboardSuggestions = findViewById(R.id.tvDashboardSuggestions);
+        if (injuryRisk.equalsIgnoreCase("medium") || injuryRisk.equalsIgnoreCase("high")) {
+            tvDashboardSuggestions.setText("Generating AI recovery suggestions...");
+
+            RecoverySuggestions.getRecoveryAdvice(
+                    injuryRisk,
+                    new RecoverySuggestions.SuggestionCallBack() {
+                        @Override
+                        public void onSuggestionReceived(String suggestions) {
+                            runOnUiThread(() -> {
+                                tvDashboardSuggestions.setText(suggestions);
+                            });
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(
+                                            "RecoveryAI Coach is resting.\n" +
+                                                    "Hydrate well\n" +
+                                                    "Prioritize sleep\n" +
+                                                    "Reduce workout intensity"
+                                    )
+                            );
+                        }
+                    }
+            );
+        } else {
+            tvDashboardSuggestions.setText("Generating recovery plan...");
+
+            RecoverySuggestions.getRecoveryAdvice(
+                    injuryRisk,
+                    new RecoverySuggestions.SuggestionCallBack() {
+
+                        @Override
+                        public void onSuggestionReceived(String suggestions) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(suggestions)
+                            );
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(
+                                            "Stay consistent with training\n" +
+                                                    "Keep hydration steady\n" +
+                                                    "Listen to your body"
+                                    ));
+                        }
+                    }
+            );
+        }
     }
 
-    private void loadRecoveryFragment() {
-        setContentView(R.layout.recovery_recommendations);
+    private float calculateBMI(int weightlbs, String heightString) {
+        try{
+            String[] parts = heightString.split("'");
+            int feet = Integer.parseInt(parts[0]);
+            int inches = Integer.parseInt(parts[1]);
+            int totalInches = feet * 12 + inches;
+            return (weightlbs * 703) / (totalInches * totalInches);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 22f; // fallback average BMI
+        }
     }
 
-    private void loadLogWorkoutFragment() {
+    private void loadRecoveryFragment(){
+    }
+
+    private void loadLogWorkoutFragment(){
         setContentView(R.layout.workout_log_screen);
 
         EditText nameText = findViewById(R.id.etExerciseName);
@@ -205,6 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
         saveBtn.setOnClickListener(v -> {
             if (saveBtn != null) saveBtn.setEnabled(false);
+            int duration = Integer.parseInt(durationText.getText().toString());
 
             Workout newWorkout = new Workout(
                     nameText.getText().toString(),
@@ -215,6 +307,43 @@ public class MainActivity extends AppCompatActivity {
 
             workouts.add(newWorkout);
 
+            float age = user_age;
+            float gender = 1;
+            float bmi = calculateBMI(user_weight, user_height);
+            String risk = logWorkout.predictInjuryRisk(age, gender, bmi, intensity, duration);
+            injuryRisk = risk.toLowerCase();
+
+            Log.d("Model", "Prediction: " + risk);
+
+            if(risk.equals("medium") || risk.equals("high")){
+                RecoverySuggestions.getRecoveryAdvice(
+                        risk,
+                        new RecoverySuggestions.SuggestionCallBack() {
+                            @Override
+                            public void onSuggestionReceived(String suggestions) {
+                                runOnUiThread(() -> {
+                                    android.widget.Toast.makeText(
+                                            MainActivity.this,
+                                            "Recovery Tips:\n" + suggestions,
+                                            android.widget.Toast.LENGTH_LONG
+                                    ).show();
+                                });
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                runOnUiThread(() -> {
+                                    android.widget.Toast.makeText(
+                                            MainActivity.this,
+                                            "Error getting suggestions",
+                                            android.widget.Toast.LENGTH_SHORT
+                                    ).show();
+                                });
+                            }
+                        }
+                );
+            }
+
             nameText.setText("");
             descText.setText("");
             durationText.setText("0");
@@ -222,6 +351,8 @@ public class MainActivity extends AppCompatActivity {
 
             saveWorkoutToFirestore(newWorkout);
             saveBtn.setEnabled(true);
+
+            loadDashboardFragment();
         });
     }
 
