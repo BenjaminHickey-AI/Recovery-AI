@@ -391,11 +391,6 @@ public class MainActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(v -> {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            if (user == null) {
-                Toast.makeText(this, "No user is signed in", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
             String newEmail = emailText.getText().toString().trim();
             String confirmEmail = confirmEmailText.getText().toString().trim();
             String newPassword = passwordText.getText().toString().trim();
