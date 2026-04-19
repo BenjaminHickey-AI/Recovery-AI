@@ -70,7 +70,7 @@
                 android:id="@+id/particlesAnchor"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="50dp"
                 android:background="@android:color/transparent"
                 app:layout_constraintTop_toBottomOf="@id/imgRecoveryAiTitle"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
                 android:id="@+id/highRiskTitleWrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +125,7 @@
                 android:id="@+id/lowRiskTitleWrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="4dp"
                 android:paddingStart="6dp"
                 android:paddingTop="6dp"
                 android:paddingEnd="6dp"
@@ -175,7 +175,7 @@
                 android:id="@+id/moderateRiskTitleWrap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -305,7 +305,7 @@
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/dumbbell_high"
-                android:translationY="-75dp"
+                android:translationY="-88dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -320,7 +320,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/dumbbell_low"
                 android:visibility="visible"
-                android:translationY="-75dp"
+                android:translationY="-88dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -334,7 +334,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/dumbbell_moderate"
                 android:visibility="gone"
-                android:translationY="-75dp"
+                android:translationY="-88dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -348,7 +348,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/treadmill_high"
                 android:visibility="gone"
-                android:translationY="-75dp"
+                android:translationY="-88dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -362,7 +362,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/treadmill_low"
                 android:visibility="visible"
-                android:translationY="-75dp"
+                android:translationY="-88dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -376,7 +376,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/treadmill_moderate"
                 android:visibility="gone"
-                android:translationY="-75dp"
+                android:translationY="-88dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -388,26 +388,35 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
+                android:translationY="13dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:id="@+id/streakLabel"
+                    android:id="@+id/tvDashboardSuggestions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/inter_regular"
-                    android:text="Your streak"
-                    android:textColor="#F3F3F3"
-                    android:textSize="13sp" />
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="Prioritze health &amp; hydrate ! "
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/dynapuff_regular"
+                    android:letterSpacing="0.08"
+                    android:shadowColor="#66AFFF"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="18" />
 
                 <LinearLayout
                     android:id="@+id/streakBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:translationY="5dp">
 
                     <TextView
                         android:id="@+id/dayM"
@@ -500,6 +509,16 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/streakLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="Your streak"
+                    android:textColor="#F3F3F3"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 

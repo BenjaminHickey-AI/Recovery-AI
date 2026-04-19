@@ -389,7 +389,7 @@
     <Button
         android:id="@+id/btnBack"
         android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_height="58dp"
         android:layout_marginBottom="18dp"
         android:background="@drawable/btn_back"
         android:text=""
