@@ -71,7 +71,7 @@
                 android:layout_height="54dp"
                 android:layout_marginTop="42dp"
                 android:background="@drawable/acct_block"
-                android:hint="marco@email.com"
+                android:hint="Change Email"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#9C9C9C"
                 android:textSize="16sp"
@@ -103,25 +103,47 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <!-- Change Password -->
+
+            <!-- Confirm Password -->
+
             <EditText
                 android:id="@+id/etChangePassword"
                 android:layout_width="0dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="14dp"
                 android:background="@drawable/acct_block"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
                 android:hint="Change Password"
+                android:inputType="textPassword"
+                android:singleLine="true"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#9C9C9C"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etCurrentPassword" />
+
+            <EditText
+                android:id="@+id/etCurrentPassword"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/acct_block"
                 android:fontFamily="@font/inter_regular"
                 android:gravity="center"
+                android:hint="Current Password"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                app:layout_constraintTop_toBottomOf="@id/etConfirmEmail"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#9C9C9C"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/etConfirmEmail" />
 
-            <!-- Confirm Password -->
             <EditText
                 android:id="@+id/etConfirmPassword"
                 android:layout_width="0dp"
@@ -179,6 +201,7 @@
             android:layout_height="match_parent"
             android:src="@drawable/btn_back"
             android:scaleType="fitCenter"
+            android:onClick="onSettingsClick"
             android:contentDescription="@null" />
 
     </FrameLayout>
