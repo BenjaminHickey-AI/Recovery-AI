@@ -1,6 +1,8 @@
 package com.recovery.recovery_ai;
 
 import Logic.*;
+
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.tensorflow.lite.Interpreter;
+import org.tensorflow.lite.support.common.FileUtil;
 
 
 import androidx.annotation.NonNull;
@@ -19,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,24 +36,37 @@ import com.google.firebase.firestore.Query;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
+    // Our injury model
+    Interpreter tflite;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
 
     // user input variables
-    String injuryRisk = "high"; // temp var for dashboard functionality: low, med, high
+    String injuryRisk = "high";// temp var for dashboard functionality: low, med, high
+    // user input variables
     int intensity = 0;
     private Vector<Workout> workouts = new Vector<>();
+    private List<String> user_goals = new ArrayList<>();
     private int user_age = 0, user_weight = 0;
-    private String user_height = "", user_first, user_last, userId;
+    private String user_height = "", user_first, user_last, userId, user_gender;
     private Bitmap user_image;
+
+    // Our UI elements
+
+    TextView tvResult;
+
+    // Workout processor
+    LogWorkout logWorkout;
 
     // history / edit helpers
     private Workout selectedWorkout = null;
@@ -53,6 +74,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Load our model
+        try {
+            tflite = new Interpreter(FileUtil.loadMappedFile(this, "risk_model.tflite"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Initializing our LogWorkout class
+        logWorkout = new LogWorkout(tflite);
+
 
         user_image = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_circle_bg);
         auth = FirebaseAuth.getInstance();
@@ -132,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 treadmillLow.setVisibility(View.VISIBLE);
 
                 break;
-            case "med":
+            case "medium":
                 moderateTitle.setVisibility(View.VISIBLE);
                 bodyModerate.setVisibility(View.VISIBLE);
                 symbolModerate.setVisibility(View.VISIBLE);
@@ -149,13 +182,79 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         populateWorkoutStreak();
+
+        TextView tvDashboardSuggestions = findViewById(R.id.tvDashboardSuggestions);
+        if (injuryRisk.equalsIgnoreCase("medium") || injuryRisk.equalsIgnoreCase("high")) {
+            tvDashboardSuggestions.setText("Generating AI recovery suggestions...");
+
+            RecoverySuggestions.getRecoveryAdvice(
+                    injuryRisk,
+                    new RecoverySuggestions.SuggestionCallBack() {
+                        @Override
+                        public void onSuggestionReceived(String suggestions) {
+                            runOnUiThread(() -> {
+                                tvDashboardSuggestions.setText(suggestions);
+                            });
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(
+                                            "RecoveryAI Coach is resting.\n" +
+                                                    "Hydrate well\n" +
+                                                    "Prioritize sleep\n" +
+                                                    "Reduce workout intensity"
+                                    )
+                            );
+                        }
+                    }
+            );
+        } else {
+            tvDashboardSuggestions.setText("Generating recovery plan...");
+
+            RecoverySuggestions.getRecoveryAdvice(
+                    injuryRisk,
+                    new RecoverySuggestions.SuggestionCallBack() {
+
+                        @Override
+                        public void onSuggestionReceived(String suggestions) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(suggestions)
+                            );
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            runOnUiThread(() ->
+                                    tvDashboardSuggestions.setText(
+                                            "Stay consistent with training\n" +
+                                                    "Keep hydration steady\n" +
+                                                    "Listen to your body"
+                                    ));
+                        }
+                    }
+            );
+        }
     }
 
-    private void loadRecoveryFragment() {
-        setContentView(R.layout.recovery_recommendations);
+    private float calculateBMI(int weightlbs, String heightString) {
+        try{
+            String[] parts = heightString.split("'");
+            int feet = Integer.parseInt(parts[0]);
+            int inches = Integer.parseInt(parts[1]);
+            int totalInches = feet * 12 + inches;
+            return (weightlbs * 703) / (totalInches * totalInches);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 22f; // fallback average BMI
+        }
     }
 
-    private void loadLogWorkoutFragment() {
+    private void loadRecoveryFragment(){
+    }
+
+    private void loadLogWorkoutFragment(){
         setContentView(R.layout.workout_log_screen);
 
         EditText nameText = findViewById(R.id.etExerciseName);
@@ -205,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
 
         saveBtn.setOnClickListener(v -> {
             if (saveBtn != null) saveBtn.setEnabled(false);
+            int duration = Integer.parseInt(durationText.getText().toString());
 
             Workout newWorkout = new Workout(
                     nameText.getText().toString(),
@@ -215,6 +315,43 @@ public class MainActivity extends AppCompatActivity {
 
             workouts.add(newWorkout);
 
+            float age = user_age;
+            float gender = 1;
+            float bmi = calculateBMI(user_weight, user_height);
+            String risk = logWorkout.predictInjuryRisk(age, gender, bmi, intensity, duration);
+            injuryRisk = risk.toLowerCase();
+
+            Log.d("Model", "Prediction: " + risk);
+
+            if(risk.equals("medium") || risk.equals("high")){
+                RecoverySuggestions.getRecoveryAdvice(
+                        risk,
+                        new RecoverySuggestions.SuggestionCallBack() {
+                            @Override
+                            public void onSuggestionReceived(String suggestions) {
+                                runOnUiThread(() -> {
+                                    android.widget.Toast.makeText(
+                                            MainActivity.this,
+                                            "Recovery Tips:\n" + suggestions,
+                                            android.widget.Toast.LENGTH_LONG
+                                    ).show();
+                                });
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                runOnUiThread(() -> {
+                                    android.widget.Toast.makeText(
+                                            MainActivity.this,
+                                            "Error getting suggestions",
+                                            android.widget.Toast.LENGTH_SHORT
+                                    ).show();
+                                });
+                            }
+                        }
+                );
+            }
+
             nameText.setText("");
             descText.setText("");
             durationText.setText("0");
@@ -222,6 +359,8 @@ public class MainActivity extends AppCompatActivity {
 
             saveWorkoutToFirestore(newWorkout);
             saveBtn.setEnabled(true);
+
+            loadDashboardFragment();
         });
     }
 
@@ -236,8 +375,267 @@ public class MainActivity extends AppCompatActivity {
         rvWorkoutHistory.setAdapter(new WorkoutHistoryAdapter());
     }
 
+    private void loadAccountSettingsFragment() {
+        setContentView(R.layout.account_settings);
+
+        EditText emailText = findViewById(R.id.etChangeEmail);
+        EditText confirmEmailText = findViewById(R.id.etConfirmEmail);
+        EditText passwordText = findViewById(R.id.etChangePassword);
+        EditText confirmPasswordText = findViewById(R.id.etConfirmPassword);
+        EditText currentPasswordText = findViewById(R.id.etCurrentPassword);
+        ImageView saveBtn = findViewById(R.id.SaveAccountButton);
+
+        saveBtn.setOnClickListener(v -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            if (user == null) {
+                Toast.makeText(this, "No user is signed in", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String newEmail = emailText.getText().toString().trim();
+            String confirmEmail = confirmEmailText.getText().toString().trim();
+            String newPassword = passwordText.getText().toString().trim();
+            String confirmPassword = confirmPasswordText.getText().toString().trim();
+            String currentPassword = currentPasswordText.getText().toString().trim();
+
+            boolean changingEmail = !newEmail.isEmpty() || !confirmEmail.isEmpty();
+            boolean changingPassword = !newPassword.isEmpty() || !confirmPassword.isEmpty();
+
+            if (!changingEmail && !changingPassword) {
+                Toast.makeText(this, "Enter a new email or password", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (changingEmail) {
+                if (!newEmail.equals(confirmEmail)) {
+                    Toast.makeText(this, "Emails do not match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
+                    Toast.makeText(this, "Enter a valid email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            if (changingPassword) {
+                if (!newPassword.equals(confirmPassword)) {
+                    Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (newPassword.length() < 6) {
+                    Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            if (currentPassword.isEmpty()) {
+                Toast.makeText(this, "Enter your current password", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
+
+            user.reauthenticate(credential)
+                    .addOnSuccessListener(unused -> {
+                        if (changingEmail && changingPassword) {
+                            user.updateEmail(newEmail)
+                                    .addOnSuccessListener(unused2 ->
+                                            user.updatePassword(newPassword)
+                                                    .addOnSuccessListener(unused3 ->
+                                                            Toast.makeText(this, "Account updated", Toast.LENGTH_SHORT).show())
+                                                    .addOnFailureListener(e ->
+                                                            Toast.makeText(this, "Password update failed: " + e.getMessage(), Toast.LENGTH_LONG).show()))
+                                    .addOnFailureListener(e ->
+                                            Toast.makeText(this, "Email update failed: " + e.getMessage(), Toast.LENGTH_LONG).show());
+
+                        } else if (changingEmail) {
+                            user.updateEmail(newEmail)
+                                    .addOnSuccessListener(unused2 ->
+                                            Toast.makeText(this, "Email updated", Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e ->
+                                            Toast.makeText(this, "Email update failed: " + e.getMessage(), Toast.LENGTH_LONG).show());
+
+                        } else {
+                            user.updatePassword(newPassword)
+                                    .addOnSuccessListener(unused2 ->
+                                            Toast.makeText(this, "Password updated", Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e ->
+                                            Toast.makeText(this, "Password update failed: " + e.getMessage(), Toast.LENGTH_LONG).show());
+                        }
+                    })
+                    .addOnFailureListener(e ->
+                            Toast.makeText(this, "Current password is incorrect", Toast.LENGTH_LONG).show());
+        });
+    }
+
     private void loadSettingsFragment() {
         setContentView(R.layout.settings);
+        EditText nameText = findViewById(R.id.etName);
+        EditText ageText = findViewById(R.id.etAge);
+        EditText heightText = findViewById(R.id.etHeight);
+        EditText weightText = findViewById(R.id.etWeight);
+        ImageView saveBtn = findViewById(R.id.SaveProfileButton);
+        ImageView logOutBtn = findViewById(R.id.LogoutButton);
+        ImageView accountSettingsBtn = findViewById(R.id.AccountSettingsButton);
+        ImageView deleteAccountBtn = findViewById(R.id.DeleteAccountButton);
+
+        nameText.setText(user_first+" "+user_last);
+        ageText.setText(Integer.toString(user_age));
+        weightText.setText(Integer.toString(user_weight) + " lbs");
+        heightText.setText(user_height);
+
+
+        logOutBtn.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
+        });
+
+        accountSettingsBtn.setOnClickListener(v -> {
+            loadAccountSettingsFragment();
+        });
+
+        deleteAccountBtn.setOnClickListener(v -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                String userId = user.getUid();
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                // Delete Firestore data first
+                db.collection("users").document(userId).delete()
+                        .addOnSuccessListener(aVoid -> {
+                            user.delete()
+                                    .addOnSuccessListener(c -> {
+                                        startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
+                                    });
+                        });
+            }
+        });
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                boolean validated = true; //turns false if any input isn't valid, nothing gets saved if false
+
+                //name input validation
+                String[] parts = nameText.getText().toString().trim().split("\\s+", 2); // split into at most 2 parts
+                if (parts.length == 2) {
+                    String firstName = parts[0];
+                    String lastName = parts[1];
+                } else {
+                    Toast.makeText(v.getContext(), "Please enter first and last name", Toast.LENGTH_SHORT).show();
+                }
+
+                //height input validation
+                String height = heightText.getText().toString();
+                String heightPattern = "^[3-9]'([0-9]|1[01])$";
+                if (!height.isEmpty()) {
+                    if (!height.matches(heightPattern)) {
+                        validated = false;
+                        Toast.makeText(v.getContext(),
+                                "Enter height like 5'2 (feet'inches)",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    validated = false;
+                    Toast.makeText(v.getContext(),
+                            "Please enter your height",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                //age input validation
+                int age = Integer.parseInt(ageText.getText().toString());
+                if (user_age < 16){
+                    validated = false;
+                    Toast.makeText(v.getContext(), "Please enter your age (must be at least 16 years old)", Toast.LENGTH_SHORT).show();
+                }
+
+                //weight input validation
+                String input = weightText.getText().toString();
+                String weightDigitsOnly = input.replaceAll("[^0-9]", "");
+                if (!weightDigitsOnly.isEmpty()) {
+                    if (Integer.parseInt(weightDigitsOnly) < 70) {
+                        validated = false;
+                        Toast.makeText(v.getContext(),
+                                "Weight must be at least 70 lbs",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    validated = false;
+                    Toast.makeText(v.getContext(),
+                            "Enter a valid weight",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                // if all text is valid, save locally and to firestore
+                if(validated) {
+                    saveBtn.setEnabled(false);
+                    user_first = nameText.getText().toString();
+                    user_weight = Integer.parseInt(weightDigitsOnly);
+
+                    user_age = Integer.parseInt(ageText.getText().toString());
+                    user_height = heightText.getText().toString();
+
+
+
+                    /*
+                    TODO -- Allow user to change goals in settings menu.
+                    List<String> goals = new ArrayList<>();
+                    if (true) goals.add("get_fit");
+                    if (true) goals.add("lose_weight");
+                    if (true) goals.add("build_muscle");
+                    if (true) goals.add("prevent_injury");
+                     */
+
+                    Map<String, Object> biometricsDoc = new HashMap<>();
+                    biometricsDoc.put("gender", user_gender);
+                    biometricsDoc.put("age", user_age);
+                    biometricsDoc.put("weight", user_weight);
+                    biometricsDoc.put("height", user_height);
+                    biometricsDoc.put("goals", user_goals);
+                    biometricsDoc.put("updatedAt", com.google.firebase.firestore.FieldValue.serverTimestamp());
+
+
+                    String historyDocId = String.valueOf(System.currentTimeMillis());
+
+                    // new biometric data stored in latest, old data gets moved to a historical document in case we add features to track biometric trends
+                    db.collection("users")
+                            .document(userId)
+                            .collection("biometrics")
+                            .document("latest")
+                            .set(biometricsDoc)
+                            .addOnSuccessListener(unused -> {
+                                // history snapshot named by timestamp
+                                db.collection("users")
+                                        .document(userId)
+                                        .collection("biometrics")
+                                        .document(historyDocId)
+                                        .set(biometricsDoc)
+                                        .addOnSuccessListener(unused2 -> {
+                                            Toast.makeText(v.getContext(),
+                                                    "Saved successfully!",
+                                                    Toast.LENGTH_LONG).show();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            if (saveBtn != null) saveBtn.setEnabled(true);
+                                            Toast.makeText(v.getContext(),
+                                                    "Saved latest, but failed to save history: " + e.getMessage(),
+                                                    Toast.LENGTH_LONG).show();
+                                        });
+
+                            })
+                            .addOnFailureListener(e -> {
+                                if (saveBtn != null) saveBtn.setEnabled(true);
+                                Toast.makeText(v.getContext(),
+                                        "Error saving biometrics: " + e.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                            });
+                }
+            }
+        });
+
     }
 
     private void loadEditWorkoutFragment(Workout workout) {
@@ -352,6 +750,8 @@ public class MainActivity extends AppCompatActivity {
                         user_age = (ageL != null) ? ageL.intValue() : 0;
                         user_weight = (weightL != null) ? weightL.intValue() : 0;
                         user_height = doc.getString("height") != null ? doc.getString("height") : "";
+                        user_gender = doc.getString("gender") != null ? doc.getString("gender") : "";
+                        user_goals = doc.get("user_goals", List.class);
                     } else {
                         Log.d("Firestore", "No biometrics/latest found");
                     }

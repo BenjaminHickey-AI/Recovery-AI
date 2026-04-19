@@ -244,10 +244,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 user_weight = Integer.parseInt(weight.getText().toString());
-                if (user_weight > 0)
+                if (user_weight > 70)
                     GoSignupSix();
                 else
-                    Toast.makeText(SignUpActivity.this, "Please enter your weight", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Please enter your weight (must be greater than 70)", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -277,11 +277,23 @@ public class SignUpActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user_height = height.getText().toString();
-                if (!user_height.isEmpty()) //TODO -- Test to make sure height input follows correct format of num'num ex(5'2)
-                    GoSignupSeven();
-                else
-                    Toast.makeText(SignUpActivity.this, "Please enter your height", Toast.LENGTH_SHORT).show();
+                user_height = height.getText().toString().trim();
+
+                String heightPattern = "^[3-9]'([0-9]|1[01])$";
+
+                if (!user_height.isEmpty()) {
+                    if (user_height.matches(heightPattern)) {
+                        GoSignupSeven();
+                    } else {
+                        Toast.makeText(SignUpActivity.this,
+                                "Enter height like 5'2 (feet'inches)",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(SignUpActivity.this,
+                            "Please enter your height",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
