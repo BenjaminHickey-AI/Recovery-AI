@@ -43,7 +43,7 @@ object GeminiRecoveryHelper {
                 <short instruction>
                 
                 RETURN:
-                <when to train again>
+                <when to train again safely>
                 
                 WARNING:
                 <1 short sentence>
