@@ -48,7 +48,7 @@ object GeminiRecoveryHelper {
                 WARNING:
                 <1 short sentence>
                 
-                Keep it clean, short, helpful, and non-medical.
+                Keep it clean, short, helpful, supportive and non-medical.
                 No extra text.
                 """.trimIndent()
 
