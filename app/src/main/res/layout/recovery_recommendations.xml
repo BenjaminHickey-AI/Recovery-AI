@@ -161,6 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_calendar"
+                android:onClick="onHistoryClick"
                 android:scaleType="centerCrop" />
         </FrameLayout>
 
@@ -178,6 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_clipboard_active"
+                android:onClick="onLogClick"
                 android:scaleType="fitCenter" />
         </FrameLayout>
 
@@ -195,6 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_home"
+                android:onClick="onDashboardClick"
                 android:scaleType="fitCenter" />
         </FrameLayout>
 
@@ -229,6 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/nav_hex"
+                android:onClick="onSettingsClick"
                 android:scaleType="fitCenter" />
         </FrameLayout>
 

@@ -255,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadRecoveryFragment(){
+        setContentView(R.layout.recovery_recommendations);
     }
 
     private void loadLogWorkoutFragment(){
