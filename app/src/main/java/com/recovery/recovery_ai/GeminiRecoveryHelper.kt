@@ -23,7 +23,7 @@ object GeminiRecoveryHelper {
                 User injury risk level: $risk
 
                 If risk is HIGH:
-                - focus on reducing strain and recovery
+                - focus on reducing strain and recovery, stress recovery and focus on recovery
 
                 If risk is MEDIUM:
                 - balance recovery and light activity
