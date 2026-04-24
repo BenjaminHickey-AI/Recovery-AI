@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onError(String error) {
                         runOnUiThread(() ->
                                 recommendationText.setText(
-                                        "RecoveryAI Coach is practicing recovery, I will be back soon.\n\n" +
+                                        "RecoveryAI Coach is practicing recovery.\n\n" +
                                                 "Hydrate well\n" +
                                                 "Stretch lightly\n" +
                                                 "Get good sleep"
