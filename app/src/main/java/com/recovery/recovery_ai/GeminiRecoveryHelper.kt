@@ -18,17 +18,38 @@ object GeminiRecoveryHelper {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val prompt = """
-                    A user has a $risk injury risk after a workout.
-                    Give exactly 3 short recovery suggestions.
-                    The 3 suggestions must be:
-                    1 recovery movement suggestion
-                    1 hydration suggestion
-                    1 rest or sleep suggestion
-                    
-                    Return each suggestion on a new line.
-                    Do NOT use bullets.
-                    Do NOT use numbering.
-                    Keep it educational and non-diagnostic.
+                You are a fitness recovery coach.
+
+                User injury risk level: $risk
+
+                If risk is HIGH:
+                - focus on reducing strain and recovery
+
+                If risk is MEDIUM:
+                - balance recovery and light activity
+
+                If risk is LOW:
+                - focus on optimizing performance and maintaining recovery
+
+                Return a recovery plan in this format:
+                
+                MOBILITY:
+                <short instruction>
+                
+                HYDRATION:
+                <short instruction>
+                
+                REST:
+                <short instruction>
+                
+                RETURN:
+                <when to train again>
+                
+                WARNING:
+                <1 short sentence>
+                
+                Keep it clean, short, helpful, and non-medical.
+                No extra text.
                 """.trimIndent()
 
                 val model = Firebase.ai(

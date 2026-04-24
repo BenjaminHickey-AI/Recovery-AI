@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     // user input variables
     String injuryRisk = "high";// temp var for dashboard functionality: low, med, high
     // user input variables
+    private String cachedRecoveryPlan = null;
+    private String cachedRiskLevel = null;
     int intensity = 0;
     private Vector<Workout> workouts = new Vector<>();
     private List<String> user_goals = new ArrayList<>();
@@ -187,60 +189,33 @@ public class MainActivity extends AppCompatActivity {
         populateWorkoutStreak();
 
         TextView tvDashboardSuggestions = findViewById(R.id.tvDashboardSuggestions);
-        if (injuryRisk.equalsIgnoreCase("medium") || injuryRisk.equalsIgnoreCase("high")) {
-            tvDashboardSuggestions.setText("Generating AI recovery suggestions...");
 
-            RecoverySuggestions.getRecoveryAdvice(
-                    injuryRisk,
-                    new RecoverySuggestions.SuggestionCallBack() {
-                        @Override
-                        public void onSuggestionReceived(String suggestions) {
-                            runOnUiThread(() -> {
-                                tvDashboardSuggestions.setText(suggestions);
-                            });
-                        }
+        switch (injuryRisk.toLowerCase()) {
+            case "high":
+                tvDashboardSuggestions.setText(
+                        "⚠️ High injury risk\nRecovery strongly recommended →"
+                );
+                break;
 
-                        @Override
-                        public void onError(String error) {
-                            runOnUiThread(() ->
-                                    tvDashboardSuggestions.setText(
-                                            "RecoveryAI Coach is resting.\n" +
-                                                    "Hydrate well\n" +
-                                                    "Prioritize sleep\n" +
-                                                    "Reduce workout intensity"
-                                    )
-                            );
-                        }
-                    }
-            );
-        } else {
-            tvDashboardSuggestions.setText("Generating recovery plan...");
+            case "medium":
+                tvDashboardSuggestions.setText(
+                        "⚠️ Moderate risk\nCheck your recovery plan →"
+                );
+                break;
 
-            RecoverySuggestions.getRecoveryAdvice(
-                    injuryRisk,
-                    new RecoverySuggestions.SuggestionCallBack() {
-
-                        @Override
-                        public void onSuggestionReceived(String suggestions) {
-                            runOnUiThread(() ->
-                                    tvDashboardSuggestions.setText(suggestions)
-                            );
-                        }
-
-                        @Override
-                        public void onError(String error) {
-                            runOnUiThread(() ->
-                                    tvDashboardSuggestions.setText(
-                                            "Stay consistent with training\n" +
-                                                    "Keep hydration steady\n" +
-                                                    "Listen to your body"
-                                    ));
-                        }
-                    }
-            );
+            case "low":
+                tvDashboardSuggestions.setText(
+                        "✅ You're recovering well\nView optimized recovery plan →"
+                );
+                break;
         }
+
+        tvDashboardSuggestions.setOnClickListener(v -> {
+            loadRecoveryFragment(injuryRisk);
+        });
     }
 
+    // HELPER FUNCTIONS FOR RECOVERY SUGGESTIONS
     private float calculateBMI(int weightlbs, String heightString) {
         try{
             String[] parts = heightString.split("'");
@@ -254,8 +229,80 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void loadRecoveryFragment(){
+    private void typeText(TextView tv, String text) {
+        final int delay = 15;
+
+        new android.os.Handler().postDelayed(new Runnable() {
+            int index = 0;
+
+            @Override
+            public void run() {
+                if (index <= text.length()) {
+                    tv.setText(text.substring(0, index));
+                    index++;
+                    new android.os.Handler().postDelayed(this, delay);
+                }
+            }
+        }, delay);
+    }
+
+    private void getRecoveryPlan(String risk, TextView recommendationText) {
+
+        // Use cache if available
+        if (cachedRecoveryPlan != null && risk.equalsIgnoreCase(cachedRiskLevel)) {
+            typeText(recommendationText, cachedRecoveryPlan);
+            return;
+        }
+
+        // Otherwise call Gemini
+        RecoverySuggestions.getRecoveryAdvice(
+                risk,
+                new RecoverySuggestions.SuggestionCallBack() {
+
+                    @Override
+                    public void onSuggestionReceived(String suggestions) {
+
+                        String formatted = suggestions
+                                .replace("MOBILITY:", "Mobility\n")
+                                .replace("HYDRATION:", "\n Hydration\n")
+                                .replace("REST:", "\n Rest\n")
+                                .replace("RETURN:", "\n Return\n")
+                                .replace("WARNING:", "\n Warning\n");
+
+                        // Save cache
+                        cachedRecoveryPlan = formatted;
+                        cachedRiskLevel = risk;
+
+                        runOnUiThread(() ->
+                                typeText(recommendationText, formatted)
+                        );
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        runOnUiThread(() ->
+                                recommendationText.setText(
+                                        "RecoveryAI Coach is resting.\n\n" +
+                                                "Hydrate well\n" +
+                                                "Stretch lightly\n" +
+                                                "Get good sleep"
+                                )
+                        );
+                    }
+                }
+        );
+    }
+
+    private void loadRecoveryFragment(String risk){
         setContentView(R.layout.recovery_recommendations);
+
+        TextView recommendationText = findViewById(R.id.recommendationText);
+
+        // Loading state
+        recommendationText.setText("🧠 Generating your recovery plan...");
+
+        // ✅ Use helper that includes caching
+        getRecoveryPlan(risk, recommendationText);
     }
 
     private void loadLogWorkoutFragment(){
@@ -716,7 +763,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRecoveryClick(View view) {
-        loadRecoveryFragment();
+        loadRecoveryFragment(injuryRisk);
     }
 
     public void onDashboardClick(View view) {
