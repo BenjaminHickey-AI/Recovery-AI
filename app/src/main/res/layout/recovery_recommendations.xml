@@ -124,12 +124,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Hydrate more today. Reduce intensity and focus on stretching. Prioritize recovery, get enough sleep tonight, and avoid pushing too hard if your body feels overly fatigued."
+                    android:text="@+id/recommendationText"
                     android:textColor="#151515"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/inter_extrabold"
-                    android:lineSpacingExtra="8dp"
+                    android:lineSpacingExtra="10dp"
+                    android:padding="12dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp" />
             </ScrollView>
