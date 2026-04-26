@@ -34,7 +34,7 @@ object GeminiRecoveryHelper {
                 Return a recovery plan in this format:
                 
                 MOBILITY:
-                <short instruction>
+                <short instruction that are clear and concise>
                 
                 HYDRATION:
                 <short instruction>
