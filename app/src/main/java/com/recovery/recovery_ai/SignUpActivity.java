@@ -30,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button nextBtn, backBtn;
 
     //user input variables
-    private boolean isMale = false, isFemale = false;
+    private boolean isMale = false, isFemale = false, isImperial = false, isMetric = false;
     private boolean toGetFit = false, toLoseWeight = false, toBuildMuscle = false, toPreventInjury = false;
     private int user_age = 0, user_weight = 0;
     private String user_height = "";
@@ -101,36 +101,38 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    /*
+
     //Sign up page 2
     private void GoSignupTwo() {
         setContentView(R.layout.activity_signup_two);
 
         //page ui elements
-        Button btnChoose, btnTakePhoto;
-        ImageView image;
+        LinearLayout optionImperial, optionMetric;
 
         //element assigning
+        optionImperial = findViewById(R.id.optionMale);
+        optionMetric = findViewById(R.id.optionFemale);
         backBtn = findViewById(R.id.btnBack);
         nextBtn = findViewById(R.id.btnNext);
-        btnChoose = findViewById(R.id.btnChoose);
-        btnTakePhoto = findViewById(R.id.btnTakePhoto);
-        image = findViewById(R.id.imgProfile);
 
-        //set image to what is stored in image variable so previously set image will appear when returning to page
-        image.setImageBitmap(user_image);
 
-        btnChoose.setOnClickListener(new View.OnClickListener() {
+        optionImperial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO -- Write code to access photo library and assign image variable to selected image
+                isImperial = true;
+                optionImperial.setBackgroundResource(R.drawable.choice_circle);
+                isMetric = false;
+                optionMetric.setBackgroundResource(R.drawable.choice_circle_dim);
             }
         });
 
-        btnTakePhoto.setOnClickListener(new View.OnClickListener() {
+        optionMetric.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO -- Write code to access camera and assign image variable to taken image
+                isImperial = false;
+                optionImperial.setBackgroundResource(R.drawable.choice_circle_dim);
+                isMetric = true;
+                optionMetric.setBackgroundResource(R.drawable.choice_circle);
             }
         });
 
@@ -144,15 +146,14 @@ public class SignUpActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (true) { //TODO -- Write code to unsure an image exists in image variable
-                    GoSignupThree();
-                } else {
-                    Toast.makeText(SignUpActivity.this, "Please upload a picture", Toast.LENGTH_SHORT).show();
-                }
+                if (isImperial || isMetric)
+                    GoSignupTwo();
+                else
+                    Toast.makeText(SignUpActivity.this, "Please select a unit", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
+/*
     //sign up page 3
     private void GoSignupThree() {
         setContentView(R.layout.activity_signup_three);

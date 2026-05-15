@@ -32,120 +32,140 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="22dp">
+            android:padding="20dp">
 
             <!-- Title -->
             <TextView
                 android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Upload an Image"
+                android:text="Tell us about yourself!"
                 android:textColor="@android:color/white"
-                android:textSize="28sp"
+                android:textSize="26sp"
                 android:textStyle="bold"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Circle image placeholder -->
-            <ImageView
-                android:id="@+id/imgProfile"
-                android:layout_width="220dp"
-                android:layout_height="220dp"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/profile_circle_bg"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/profile_image"
-                app:layout_constraintTop_toBottomOf="@id/title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <!-- Choose from Library -->
-            <Button
-                android:id="@+id/btnChoose"
+            <!-- Subtitle -->
+            <TextView
+                android:id="@+id/subtitle"
                 android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginTop="22dp"
-                android:text="Choose from Library"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/inter_extrabold"
-                android:background="@drawable/black_pill"
-                android:backgroundTint="@null"
-                android:stateListAnimator="@null"
-                app:backgroundTint="@null"
-                app:layout_constraintTop_toBottomOf="@id/imgProfile"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Please select your unit preference!"
+                android:textColor="#CCFFFFFF"
+                android:textSize="14sp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Take a Photo -->
-            <Button
-                android:id="@+id/btnTakePhoto"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_marginTop="14dp"
-                android:text="Take a Photo"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/inter_extrabold"
-                android:background="@drawable/black_pill"
-                android:backgroundTint="@null"
-                android:stateListAnimator="@null"
-                app:backgroundTint="@null"
-                app:layout_constraintTop_toBottomOf="@id/btnChoose"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-
-            <!-- Back / Next  -->
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="100dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="18dp"
-                android:text="Back"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:background="@drawable/green_pill"
-                android:backgroundTint="@null"
-                app:backgroundTint="@null"
+            <!-- Male option -->
+            <LinearLayout
+                android:id="@+id/optionMale"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/choice_circle"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
                 android:elevation="10dp"
-                android:stateListAnimator="@null"
-                app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintTop_toBottomOf="@id/subtitle"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btnNext"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="14dp"/>
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Imperial"
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <!-- Female option  -->
+
+            <!-- Back / Next row  -->
+
+            <LinearLayout
+                android:id="@+id/optionFemale"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="60dp"
+                android:background="@drawable/choice_circle_dim"
+                android:clickable="true"
+                android:elevation="10dp"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/btnBack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/optionMale"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Metric"
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="100dp"
                 android:layout_height="48dp"
+                android:background="@drawable/green_pill"
+                android:backgroundTint="@null"
+                android:elevation="10dp"
+                android:stateListAnimator="@null"
                 android:text="Next >"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:elevation="10dp"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="@id/btnBack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="@id/btnBack"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="14dp"
                 android:background="@drawable/green_pill"
                 android:backgroundTint="@null"
-                app:backgroundTint="@null"
+                android:elevation="10dp"
                 android:stateListAnimator="@null"
-                app:layout_constraintTop_toTopOf="@id/btnBack"
-                app:layout_constraintBottom_toBottomOf="@id/btnBack"
-                app:layout_constraintStart_toEndOf="@id/btnBack"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:text="Back"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnNext"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line2" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

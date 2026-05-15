@@ -19,9 +19,6 @@ import android.widget.Toast;
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
 
-import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.support.common.FileUtil;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -105,21 +102,6 @@ public class MainActivity extends AppCompatActivity {
         loadDashboardFragment();
     }
 
-    private void loadProfileFragment() {
-        setContentView(R.layout.profile_screen);
-
-        TextView weight, height, age, name;
-
-        name = findViewById(R.id.name);
-        weight = findViewById(R.id.weight);
-        height = findViewById(R.id.height);
-        age = findViewById(R.id.age);
-
-        name.setText(user_first + " " + user_last);
-        weight.setText(Integer.toString(user_weight));
-        age.setText(Integer.toString(user_age));
-        height.setText(user_height);
-    }
 
     private void loadDashboardFragment() {
         setContentView(R.layout.dashboard);
@@ -354,27 +336,76 @@ public class MainActivity extends AppCompatActivity {
         });
 
         saveBtn.setOnClickListener(v -> {
+
+            String name = nameText.getText().toString().trim();
+            String description = descText.getText().toString().trim();
+            String durationString = durationText.getText().toString().trim();
+
+            // Validation
+            if (name.isEmpty()) {
+                Toast.makeText(this, "Please enter a workout name", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (description.isEmpty()) {
+                Toast.makeText(this, "Please enter a description", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (intensity <= 0) {
+                Toast.makeText(this, "Please select an intensity", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (durationString.isEmpty()) {
+                Toast.makeText(this, "Please enter a duration", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int duration;
+
+            try {
+                duration = Integer.parseInt(durationString);
+            } catch (Exception e) {
+                Toast.makeText(this, "Invalid duration", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             if (saveBtn != null) saveBtn.setEnabled(false);
-            int duration = Integer.parseInt(durationText.getText().toString());
 
             Workout newWorkout = new Workout(
-                    nameText.getText().toString(),
-                    descText.getText().toString(),
-                    Integer.parseInt(durationText.getText().toString()),
+                    name,
+                    description,
+                    duration,
                     intensity
             );
 
             workouts.add(newWorkout);
 
+            updateRisk(newWorkout);
+
+            nameText.setText("");
+            descText.setText("");
+            durationText.setText("0");
+            intensityDescription.setText("Select an intensity");
+
+            saveWorkoutToFirestore(newWorkout);
+
+            saveBtn.setEnabled(true);
+
+            loadDashboardFragment();
+        });
+    }
+
+    private void updateRisk(Workout workout){
+        try {
             float age = user_age;
             float gender = 1;
             float bmi = calculateBMI(user_weight, user_height);
-            String risk = logWorkout.predictInjuryRisk(age, gender, bmi, intensity, duration);
+            String risk = logWorkout.predictInjuryRisk(age, gender, bmi, workout.getIntensity(), workout.getDuration());
             injuryRisk = risk.toLowerCase();
-
             Log.d("Model", "Prediction: " + risk);
-
-            if(risk.equals("medium") || risk.equals("high")){
+            if (risk.equals("medium") || risk.equals("high")) {
                 RecoverySuggestions.getRecoveryAdvice(
                         risk,
                         new RecoverySuggestions.SuggestionCallBack() {
@@ -402,17 +433,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                 );
             }
-
-            nameText.setText("");
-            descText.setText("");
-            durationText.setText("0");
-            intensityDescription.setText("Select an intensity");
-
-            saveWorkoutToFirestore(newWorkout);
-            saveBtn.setEnabled(true);
-
-            loadDashboardFragment();
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadHistoryFragment() {
@@ -517,6 +540,58 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void loadDeleteAccountFragment() {
+        setContentView(R.layout.delete_account_confirmation);
+
+        EditText passwordConf = findViewById(R.id.etConfirmPassword);
+        Button backBtn = findViewById(R.id.btnBack);
+        Button deleteBtn = findViewById(R.id.btnDelete);
+
+        backBtn.setOnClickListener(v -> loadSettingsFragment());
+
+        deleteBtn.setOnClickListener(v -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            if (user == null || user.getEmail() == null) return;
+
+            String password = passwordConf.getText().toString().trim();
+
+            if (password.isEmpty()) {
+                passwordConf.setError("Enter your password");
+                return;
+            }
+
+            AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), password);
+
+            user.reauthenticate(credential)
+                    .addOnSuccessListener(authResult -> {
+                        String userId = user.getUid();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                        db.collection("users")
+                                .document(userId)
+                                .delete()
+                                .addOnSuccessListener(aVoid -> {
+                                    user.delete()
+                                            .addOnSuccessListener(c -> {
+                                                startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
+                                                finish();
+                                            })
+                                            .addOnFailureListener(e ->
+                                                    Toast.makeText(this, "Failed to delete account", Toast.LENGTH_SHORT).show()
+                                            );
+                                })
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(this, "Failed to delete user data", Toast.LENGTH_SHORT).show()
+                                );
+                    })
+                    .addOnFailureListener(e -> {
+                        passwordConf.setError("Incorrect password");
+                        Toast.makeText(this, "Reauthentication failed", Toast.LENGTH_SHORT).show();
+                    });
+        });
+    }
+
     private void loadSettingsFragment() {
         setContentView(R.layout.settings);
         EditText nameText = findViewById(R.id.etName);
@@ -544,21 +619,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         deleteAccountBtn.setOnClickListener(v -> {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                String userId = user.getUid();
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                // Delete Firestore data first
-                db.collection("users").document(userId).delete()
-                        .addOnSuccessListener(aVoid -> {
-                            user.delete()
-                                    .addOnSuccessListener(c -> {
-                                        startActivity(new Intent(MainActivity.this, SplashScreenActivity.class));
-                                    });
-                        });
-            }
+            loadDeleteAccountFragment();
         });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -695,7 +756,7 @@ public class MainActivity extends AppCompatActivity {
         EditText durationText = findViewById(R.id.etDurationValue);
         Button saveBtn = findViewById(R.id.btnSaveIntensity);
         Button backBtn = findViewById(R.id.btnBack);
-
+        Button deleteBtn = findViewById(R.id.btnDelete);
         nameText.setText(workout.getName());
         descText.setText(workout.getDescription());
         durationText.setText(Integer.toString(workout.getDuration()));
@@ -752,6 +813,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         backBtn.setOnClickListener(v -> {
+            loadHistoryFragment();
+        });
+
+        deleteBtn.setOnClickListener(v -> {
+            deleteWorkoutFromFirestore(workout);
             loadHistoryFragment();
         });
     }
@@ -905,7 +971,7 @@ public class MainActivity extends AppCompatActivity {
             holder.day.setText(getDayLabel(workout.getDate()));
             holder.date.setText(getDateLabel(workout.getDate()));
             holder.durationValue.setText(workout.getDuration() + " MINS");
-
+            holder.name.setText(workout.getName());
             setFireIcon(holder, workout.getIntensity());
 
             holder.cardWorkoutItem.setOnClickListener(v -> loadEditWorkoutFragment(workout));
@@ -918,7 +984,7 @@ public class MainActivity extends AppCompatActivity {
 
         class WorkoutViewHolder extends RecyclerView.ViewHolder {
             View cardWorkoutItem;
-            TextView day, date, durationValue;
+            TextView day, date, durationValue, name;
             ImageView fireVeryLight, fireLight, fireMild, fireHard, fireVeryHard, fireMax;
 
             WorkoutViewHolder(@NonNull View itemView) {
@@ -927,6 +993,7 @@ public class MainActivity extends AppCompatActivity {
                 cardWorkoutItem = itemView.findViewById(R.id.cardWorkoutItem);
                 day = itemView.findViewById(R.id.day);
                 date = itemView.findViewById(R.id.date);
+                name = itemView.findViewById(R.id.name);
                 durationValue = itemView.findViewById(R.id.durationValue);
 
                 fireVeryLight = itemView.findViewById(R.id.fireVeryLight);

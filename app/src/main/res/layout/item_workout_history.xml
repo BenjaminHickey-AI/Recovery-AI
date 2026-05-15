@@ -55,6 +55,19 @@
             app:layout_constraintStart_toEndOf="@id/dayBubble" />
 
         <!-- duration -->
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="144dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="108dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="Name"
+            android:textColor="#0A0A0A"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@id/dayBubble"
+            app:layout_constraintTop_toTopOf="@id/dayBubble" />
+
         <TextView
             android:id="@+id/durationLabel"
             android:layout_width="wrap_content"
