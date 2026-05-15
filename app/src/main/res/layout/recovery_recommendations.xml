@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_auth"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/logoCircle"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/logo_circle_black"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_launcher_logo"
+            android:scaleType="fitCenter" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/glassCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_glass_dashboard"
+        app:layout_constraintTop_toBottomOf="@id/logoCircle"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="14dp">
+
+            <ImageView
+                android:id="@+id/recoveryRecommendationsTitle"
+                android:layout_width="240dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/recovery_title"
+                android:scaleType="fitCenter"
+                android:translationY="5dp"
+                android:contentDescription="@null"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:elevation="5dp"/>
+
+            <ImageView
+                android:id="@+id/imgRecommendationPanel"
+                android:layout_width="470dp"
+                android:layout_height="600dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="70dp"
+                android:src="@drawable/recommendation_panel_outer"
+                android:scaleType="fitXY"
+                android:translationX="-15dp"
+                android:contentDescription="@null"
+                app:layout_constraintTop_toBottomOf="@id/recoveryRecommendationsTitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgRecommendationInnerCard"
+                android:layout_width="250dp"
+                android:layout_height="420dp"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="78dp"
+                android:layout_marginEnd="38dp"
+                android:layout_marginBottom="42dp"
+                android:translationY="5dp"
+                android:src="@drawable/inner_card"
+                android:scaleType="fitXY"
+                android:contentDescription="@null"
+                app:layout_constraintTop_toTopOf="@id/imgRecommendationPanel"
+                app:layout_constraintBottom_toBottomOf="@id/imgRecommendationPanel"
+                app:layout_constraintStart_toStartOf="@id/imgRecommendationPanel"
+                app:layout_constraintEnd_toEndOf="@id/imgRecommendationPanel" />
+
+            <ScrollView
+                android:id="@+id/recommendationScroll"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="18dp"
+                android:fillViewport="true"
+                android:overScrollMode="never"
+                android:scrollbars="vertical"
+                app:layout_constraintTop_toTopOf="@id/imgRecommendationInnerCard"
+                app:layout_constraintBottom_toBottomOf="@id/imgRecommendationInnerCard"
+                app:layout_constraintStart_toStartOf="@id/imgRecommendationInnerCard"
+                app:layout_constraintEnd_toEndOf="@id/imgRecommendationInnerCard">
+
+                <TextView
+                    android:id="@+id/recommendationText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@+id/recommendationText"
+                    android:textColor="#151515"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:lineSpacingExtra="10dp"
+                    android:padding="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp" />
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+    <!-- Bottom nav -->
+    <LinearLayout
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="6dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_calendar"
+                android:onClick="onHistoryClick"
+                android:scaleType="centerCrop" />
+        </FrameLayout>
+
+        <Space
+            android:layout_width="14dp"
+            android:layout_height="1dp" />
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_clipboard_active"
+                android:onClick="onLogClick"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+        <Space
+            android:layout_width="14dp"
+            android:layout_height="1dp" />
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_home"
+                android:onClick="onDashboardClick"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+        <Space
+            android:layout_width="14dp"
+            android:layout_height="1dp" />
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_active_red"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_arm"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+        <Space
+            android:layout_width="14dp"
+            android:layout_height="1dp" />
+
+        <FrameLayout
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:background="@drawable/nav_circle_bg"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/nav_hex"
+                android:onClick="onSettingsClick"
+                android:scaleType="fitCenter" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

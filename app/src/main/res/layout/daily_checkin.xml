@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background -->
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_auth"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Top logo -->
+    <FrameLayout
+        android:id="@+id/logoCircle"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:background="@drawable/logo_circle_black"
+        android:padding="8dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_launcher_logo"
+            android:scaleType="fitCenter"/>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnBackOutside"
+        android:layout_width="120dp"
+        android:layout_height="46dp"
+        android:text="Back"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:background="@drawable/green_pill"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        app:backgroundTint="@null"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/glassCard"
+        android:layout_marginStart="14dp"/>
+
+    <Button
+        android:id="@+id/btnSaveOutside"
+        android:layout_width="120dp"
+        android:layout_height="46dp"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:background="@drawable/save_pill"
+        android:backgroundTint="@null"
+        android:stateListAnimator="@null"
+        app:backgroundTint="@null"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/glassCard"
+        android:layout_marginEnd="14dp"/>
+
+    <!-- Glass card-->
+    <FrameLayout
+        android:id="@+id/glassCard"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_glass"
+        app:layout_constraintTop_toBottomOf="@id/logoCircle"
+        app:layout_constraintBottom_toTopOf="@id/btnBackOutside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Check-in"
+                android:textColor="#FFFFFF"
+                android:textSize="29sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Anatomy images -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/anatomyRow"
+                android:layout_width="0dp"
+                android:layout_height="230dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/imgFrontBody"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/body_front_placeholder"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/imgBackBody"
+                    app:layout_constraintWidth_percent="0.48"/>
+
+                <ImageView
+                    android:id="@+id/imgBackBody"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/body_back_placeholder"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imgFrontBody"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.48"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Soreness slider -->
+            <TextView
+                android:id="@+id/sorenessLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Soreness Slider"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="@font/inter_bold"
+                app:layout_constraintTop_toBottomOf="@id/anatomyRow"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <!-- upper-right hint text -->
+            <TextView
+                android:id="@+id/tapHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tap a body part\nto mark soreness"
+                android:textColor="#D7D7D7"
+                android:textSize="11sp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="end"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toTopOf="@id/sorenessLabel"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- SeekBar -->
+            <SeekBar
+                android:id="@+id/seekSoreness"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="12dp"
+                android:max="10"
+                android:splitTrack="false"
+                android:thumb="@drawable/seek_thumb_square"
+                android:progressDrawable="@drawable/seekbar_soreness"
+                app:layout_constraintTop_toBottomOf="@id/sorenessLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/sorenessMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:fontFamily="@font/inter_regular"
+                app:layout_constraintTop_toBottomOf="@id/seekSoreness"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/sorenessMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:fontFamily="@font/inter_regular"
+                app:layout_constraintTop_toBottomOf="@id/seekSoreness"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- How do you feel today -->
+            <TextView
+                android:id="@+id/feelLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="How do you feel today"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="@font/inter_bold"
+                app:layout_constraintTop_toBottomOf="@id/sorenessMin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Mood pills-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/feelWrap"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:layout_constraintTop_toBottomOf="@id/feelLabel"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <Button
+                    android:id="@+id/btnExhausted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="Exhausted"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:background="@drawable/pill_white"
+                    android:backgroundTint="@null"
+                    app:backgroundTint="@null"
+                    android:stateListAnimator="@null"/>
+
+                <Button
+                    android:id="@+id/btnOkay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="Okay"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:background="@drawable/pill_white"
+                    android:backgroundTint="@null"
+                    app:backgroundTint="@null"
+                    android:stateListAnimator="@null"/>
+
+                <Button
+                    android:id="@+id/btnTired"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="Tired"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:background="@drawable/pill_white"
+                    android:backgroundTint="@null"
+                    app:backgroundTint="@null"
+                    android:stateListAnimator="@null"/>
+
+                <Button
+                    android:id="@+id/btnGood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="Good"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:background="@drawable/pill_white"
+                    android:backgroundTint="@null"
+                    app:backgroundTint="@null"
+                    android:stateListAnimator="@null"/>
+
+                <Button
+                    android:id="@+id/btnGreat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="Great"
+                    android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/inter_extrabold"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:background="@drawable/pill_white"
+                    android:backgroundTint="@null"
+                    app:backgroundTint="@null"
+                    android:stateListAnimator="@null"/>
+
+                <!-- Flow helper -->
+                <androidx.constraintlayout.helper.widget.Flow
+                    android:id="@+id/feelFlow"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="btnExhausted,btnOkay,btnTired,btnGood,btnGreat"
+                    app:flow_horizontalGap="8dp"
+                    app:flow_verticalGap="8dp"
+                    app:flow_wrapMode="chain"
+                    app:flow_maxElementsWrap="3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Hours slept -->
+            <TextView
+                android:id="@+id/sleepLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Hours Slept:"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="@font/inter_bold"
+                app:layout_constraintTop_toBottomOf="@id/feelWrap"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <!-- input components spinner for hours slept -->
+            <Spinner
+                android:id="@+id/spinnerSleepHours"
+                android:layout_width="72dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/dropdown_dark"
+                android:popupBackground="@drawable/dropdown_popup"
+                android:entries="@array/sleep_hours_options"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:spinnerMode="dropdown"
+                android:fontFamily="@font/inter_bold"
+                app:layout_constraintTop_toTopOf="@id/sleepLabel"
+                app:layout_constraintBottom_toBottomOf="@id/sleepLabel"
+                app:layout_constraintStart_toEndOf="@id/sleepLabel"/>
+
+            <!-- Did you train today -->
+            <TextView
+                android:id="@+id/trainLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Did you train today:"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:fontFamily="@font/inter_bold"
+                app:layout_constraintTop_toBottomOf="@id/sleepLabel"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <!-- Yes/No pills -->
+            <Button
+                android:id="@+id/btnYes"
+                android:layout_width="78dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="10dp"
+                android:text="Yes"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#0A0A0A"
+                android:fontFamily="@font/inter_bold"
+                android:background="@drawable/pill_light_green"
+                android:backgroundTint="@null"
+                app:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:includeFontPadding="false"
+                app:layout_constraintStart_toEndOf="@id/trainLabel"
+                app:layout_constraintTop_toTopOf="@id/trainLabel"
+                app:layout_constraintBottom_toBottomOf="@id/trainLabel"/>
+
+            <Button
+                android:id="@+id/btnNo"
+                android:layout_width="78dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="10dp"
+                android:text="No"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:fontFamily="@font/inter_bold"
+                android:background="@drawable/pill_light_green"
+                android:backgroundTint="@null"
+                app:backgroundTint="@null"
+                android:stateListAnimator="@null"
+                android:includeFontPadding="false"
+                app:layout_constraintStart_toEndOf="@id/btnYes"
+                app:layout_constraintTop_toTopOf="@id/btnYes"
+                app:layout_constraintBottom_toBottomOf="@id/btnYes"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
